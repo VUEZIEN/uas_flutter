@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/add-prooduk/bindings/add_prooduk_binding.dart';
+import '../modules/add-prooduk/views/add_prooduk_view.dart';
 import '../modules/admin/bindings/admin_binding.dart';
 import '../modules/admin/views/admin_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -55,8 +57,13 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.ADMIN,
-      page: () =>  AdminView(),
+      page: () => AdminView(),
       binding: AdminBinding(),
+    ),
+    GetPage(
+      name: _Paths.ADD_PROODUK,
+      page: () => AddProodukView(),
+      binding: AddProodukBinding(),
     ),
   ];
 }

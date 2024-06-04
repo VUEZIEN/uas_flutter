@@ -8,18 +8,25 @@ class AdminController extends GetxController {
   FirebaseFirestore fs = FirebaseFirestore.instance;
   RxBool status = false.obs;
   List<Produk> data = [];
+  
   getProduct() async {
-    final produk = await fs.collection("produk").get();
+    try {
+      final produk = await fs.collection("produk").get();
 
-    if (produk.docs.isNotEmpty) {
-      print(produk.docs);
-      produk.docs.map((e) {
-        print(e.data());
-        print(e.id);
-        Produk productList = Produk.fromJson(Map.from(e.data()), e.id);
-        data.add(productList);
-      }).toList();
-      status.value = true;
+      print(produk);
+
+      if (produk.docs.isNotEmpty) {
+        print(produk.docs);
+        produk.docs.map((e) {
+          print(e.data());
+          print(e.id);
+          Produk productList = Produk.fromJson(Map.from(e.data()), e.id);
+          data.add(productList);
+        }).toList();
+        status.value = true;
+      }
+    } catch (e) {
+      print('err ${e}');
     }
   }
 

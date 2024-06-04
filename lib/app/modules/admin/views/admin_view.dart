@@ -1,14 +1,18 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:uas_flutter/app/controllers/authcontroller.dart';
 import 'package:uas_flutter/app/modules/admin/model/produk.model.dart';
+import 'package:uas_flutter/app/routes/app_pages.dart';
 
 import '../controllers/admin_controller.dart';
 
 class AdminView extends GetView<AdminController> {
   final auth = Get.put(AuthController());
    final srt = Get.put(AuthController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,6 +22,12 @@ class AdminView extends GetView<AdminController> {
       ),
       body: Column(
         children: [
+          TextButton(
+            onPressed: () {
+              Get.toNamed(Routes.ADD_PROODUK);
+            }, 
+            child: Text('Tambah Data')
+          ),
            Obx(() => controller.status.value
             ? SingleChildScrollView(
                 scrollDirection: Axis.vertical,
