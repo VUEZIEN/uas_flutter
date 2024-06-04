@@ -28,7 +28,7 @@ class Myapp extends StatelessWidget {
           return GetMaterialApp(
             title: "Application",
             initialRoute: snapshot.data != null
-                ? (snapshot.data.email == 'ariiqmaazin@gmail.com' ? Routes.ADMIN : Routes.HOME)
+                ? (snapshot.data.email == adminEmails ? Routes.ADMIN : Routes.HOME)
                 : Routes.LOGIN,
             getPages: AppPages.routes,
           );

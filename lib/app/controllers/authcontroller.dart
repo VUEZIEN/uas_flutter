@@ -8,10 +8,18 @@ import 'package:uas_flutter/app/routes/app_pages.dart';
 
 class AuthController extends GetxController {
   String codeOtp = "";
+  List<String> adminEmails = [
+    'akunikky11@gmail.com',
+    'admin@gmail.com',
+    'daffazikrillah1@gmail.com'
+  ];
 
   Stream authStatus = FirebaseAuth.instance.authStateChanges();
 
-  login(String email, String password,) async {
+  login(
+    String email,
+    String password,
+  ) async {
     try {
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
@@ -20,18 +28,13 @@ class AuthController extends GetxController {
 
       Get.back();
 
-      List<String> adminEmails = [
-        'akunikky11@gmail.com',
-        'admin@gmail.com',
-        'daffazikrillah1@gmail.com'
-      ];
       if (adminEmails.contains(email)) {
         Get.offAllNamed(Routes.ADMIN);
       } else {
         Get.offAllNamed(Routes.HOME);
       }
     } on FirebaseAuthException catch (e) {
-       Get.defaultDialog(middleText: "Gagal Login", title: "Error");
+      Get.defaultDialog(middleText: "Gagal Login", title: "Error");
     } catch (e) {
       print(e);
     }
