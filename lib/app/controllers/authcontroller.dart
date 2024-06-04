@@ -28,6 +28,11 @@ class AuthController extends GetxController {
 
       Get.back();
 
+      List<String> adminEmails = [
+        'akunikky11@gmail.com',
+        'admin@gmail.com',
+        'daffazikrillah1@gmail.com'
+      ];
       if (adminEmails.contains(email)) {
         Get.offAllNamed(Routes.ADMIN);
       } else {
