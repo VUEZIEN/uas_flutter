@@ -23,10 +23,13 @@ class Myapp extends StatelessWidget {
     return StreamBuilder(
       stream: auth.authStatus,
       builder: (context, snapshot) {
+        print(snapshot.data);
         if (snapshot.connectionState == ConnectionState.active) {
           return GetMaterialApp(
             title: "Application",
-            initialRoute: snapshot.data != null ? Routes.HOME : Routes.LOGIN,
+            initialRoute: snapshot.data != null
+                ? (snapshot.data.email == 'ariiqmaazin@gmail.com' ? Routes.ADMIN : Routes.HOME)
+                : Routes.LOGIN,
             getPages: AppPages.routes,
           );
         } else {
