@@ -22,7 +22,7 @@ class AuthController extends GetxController {
 
       List<String> adminEmails = [
         'akunikky11@gmail.com',
-        'admin@gmail.com',
+        'ariiqmaazin@gmail.com',
         'daffazikrillah1@gmail.com'
       ];
       if (adminEmails.contains(email)) {
