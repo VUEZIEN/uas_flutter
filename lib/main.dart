@@ -28,6 +28,7 @@ class Myapp extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.active) {
           return GetMaterialApp(
             title: "Application",
+            debugShowCheckedModeBanner: false,
             initialRoute: snapshot.data != null
                 ? (snapshot.data.email == 'ariiqmaazin@gmail.com' ? Routes.ADMIN : Routes.HOME)
                 : Routes.LOGIN,

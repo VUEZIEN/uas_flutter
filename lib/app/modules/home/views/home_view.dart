@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:uas_flutter/app/controllers/authcontroller.dart';
+import 'package:uas_flutter/color/color.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -23,19 +24,22 @@ class HomeView extends GetView<HomeController> {
                 child: IconButton(
                     onPressed: () {
                       Get.defaultDialog(
-                        title: 'Are u sure',
-                        middleText: 'logout this apk?',
+                        title: 'Apakah anda yakin?',
+                        middleText: 'Sign Out dari lelang online?',
                         confirm: ElevatedButton(
                             onPressed: () => auth.logout(),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: CustomColors.ijoTua
+                            ),
                             child: Text(
-                              'yess',
+                              'Ya!',
                               style: TextStyle(color: Colors.white),
                             )),
                         cancel: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.red),
+                                backgroundColor: CustomColors.kremTua),
                             onPressed: () => Get.back(),
-                            child: Text('no')),
+                            child: Text('Tidak!', style: TextStyle(color: Colors.white))),
                       );
                     },
                     icon: Icon(Icons.logout)),

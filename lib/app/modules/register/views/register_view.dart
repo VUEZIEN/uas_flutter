@@ -1,21 +1,20 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:uas_flutter/app/controllers/authcontroller.dart';
 import 'package:uas_flutter/app/routes/app_pages.dart';
+import 'package:uas_flutter/color/color.dart';
 
 import '../controllers/register_controller.dart';
 
 class RegisterView extends GetView<RegisterController> {
+  final auth = Get.put(AuthController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blue[900],
-        title: Text('Lelang Indonesia'),
-        foregroundColor: Colors.white,
-      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -37,27 +36,15 @@ class RegisterView extends GetView<RegisterController> {
               ),
               SizedBox(height: 16),
               TextField(
+                controller: controller.email,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Nama',
+                  labelText: 'Email',
                 ),
               ),
               SizedBox(height: 16),
               TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'email',
-                ),
-              ),
-              SizedBox(height: 16),
-              TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Nomor handphone',
-                ),
-              ),
-              SizedBox(height: 16),
-              TextField(
+                controller: controller.password,
                 obscureText: true,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -66,25 +53,48 @@ class RegisterView extends GetView<RegisterController> {
               ),
               SizedBox(height: 16),
               TextField(
+                controller: controller.konfPassword,
                 obscureText: true,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Ulangi Password',
+                  labelText: 'Konfirmasi Password',
                 ),
               ),
               SizedBox(height: 16),
               ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(double.infinity, 50),
-                  backgroundColor: Colors.green,
-                ),
-                child: Text('Daftar'),
-              ),
+                  onPressed: () async {
+                    if (!auth.loading.value) {
+                      if (controller.email.text.isNotEmpty &&
+                          controller.password.text.isNotEmpty &&
+                          controller.konfPassword.text.isNotEmpty) {
+                        if (controller.konfPassword.text ==
+                            controller.password.text) {
+                          controller.loading.value = true;
+                          await auth.register(
+                              controller.email.text, controller.password.text);
+                          controller.loading.value = false;
+                        } else {
+                          Get.defaultDialog(
+                              title: 'Password dan Konfirmasi Password Beda!',
+                              middleText:
+                                  'Samakan Password dan Konfirmasi Password');
+                        }
+                      }
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size(double.infinity, 50),
+                    backgroundColor: CustomColors.ijoTua,
+                  ),
+                  child: Obx(
+                    () => Text(
+                        auth.loading.value == true ? 'Loading...' : 'Daftar',
+                        style: TextStyle(color: CustomColors.kremMuda)),
+                  )),
               SizedBox(height: 16),
               Center(
                 child: TextButton(
-                  onPressed: () => Get.offAllNamed(Routes.LOGIN_USER),
+                  onPressed: () => Get.offAllNamed(Routes.LOGIN),
                   child: Text(
                     'Sudah punya akun? Klik disini',
                     style: TextStyle(color: Colors.blue),

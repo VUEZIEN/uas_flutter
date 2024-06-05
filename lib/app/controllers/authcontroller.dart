@@ -16,6 +16,7 @@ class AuthController extends GetxController {
     String password,
   ) async {
     try {
+      loading.value = true;
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
@@ -28,6 +29,7 @@ class AuthController extends GetxController {
       } else {
         Get.offAllNamed(Routes.HOME);
       }
+      loading.value = false;
     } on FirebaseAuthException catch (e) {
       Get.defaultDialog(middleText: "Gagal Login", title: "Error");
     } catch (e) {
@@ -42,13 +44,14 @@ class AuthController extends GetxController {
 
   register(String email, String password) async {
     try {
-      Get.defaultDialog(content: CircularProgressIndicator(), title: "loading");
+      loading.value = true;
       final credential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      Get.offAllNamed(Routes.LOGIN);
+      loading.value = false;
+      Get.offAllNamed(Routes.HOME);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
