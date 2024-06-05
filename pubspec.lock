@@ -117,10 +117,10 @@ packages:
     dependency: "direct main"
     description:
       name: file_picker
-      sha256: "29c90806ac5f5fb896547720b73b17ee9aed9bba540dc5d91fe29f8c5745b10a"
+      sha256: a7965f87b5894605771d8fffd29236f7d697f73bd254d1e599e7075cb7b1f8bf
       url: "https://pub.dev"
     source: hosted
-    version: "8.0.3"
+    version: "7.1.0+1"
   firebase_auth:
     dependency: "direct main"
     description:
@@ -206,6 +206,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.2"
+  flutter_masked_text2:
+    dependency: "direct main"
+    description:
+      name: flutter_masked_text2
+      sha256: "5ccf6f1f8b7b7a8025e3fbaea48bff0aa7e7e9512c723e26138a0b24f31ca4d8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.9.1"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -296,6 +304,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
+  intl:
+    dependency: "direct main"
+    description:
+      name: intl
+      sha256: "910f85bce16fb5c6f614e117efa303e85a1731bb0081edf3604a2ae6e9a3cc91"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.17.0"
   leak_tracker:
     dependency: transitive
     description:
