@@ -10,6 +10,7 @@ import 'package:uas_flutter/app/data/admin_emails.dart';
 class AuthController extends GetxController {
   String codeOtp = "";
   Stream authStatus = FirebaseAuth.instance.authStateChanges();
+  RxBool loading = false.obs;
 
   login(
     String email,
