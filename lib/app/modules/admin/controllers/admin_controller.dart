@@ -11,15 +11,15 @@ class AdminController extends GetxController {
   
   getProduct() async {
     try {
+      status.value = false;
       final produk = await fs.collection("produk").get();
 
       print(produk);
 
       if (produk.docs.isNotEmpty) {
-        print(produk.docs);
         produk.docs.map((e) {
-          print(e.data());
           print(e.id);
+          print(e.data());
           Produk productList = Produk.fromJson(Map.from(e.data()), e.id);
           data.add(productList);
         }).toList();
