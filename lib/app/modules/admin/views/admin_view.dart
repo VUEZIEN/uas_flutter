@@ -36,120 +36,213 @@ class AdminView extends GetView<AdminController> {
         title: Text('Data Produk', style: TextStyle(color: Colors.white)),
         backgroundColor: CustomColors.ijoMuda,
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 12),
-        child: Column(
-          children: [
-            SizedBox(height: 24),
-            Row(
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      width: 14,
-                      height: 14,
-                      color: Colors.green,
-                    ),
-                    SizedBox(width: 2),
-                    Text('BELUM SOLD')
-                  ],
-                ),
-                SizedBox(width: 6),
-                Row(
-                  children: [
-                    Container(
-                      width: 14,
-                      height: 14,
-                      color: Colors.grey,
-                    ),
-                    SizedBox(width: 2),
-                    Text('SUDAH SOLD')
-                  ],
-                ),
-              ],
-            ),
-            SizedBox(height: 12),
-            Obx(() => controller.status.value
-                ? SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: Column(
-                      children: List.generate(controller.data.length, (index) {
-                        Produk dt = controller.data[index];
-
-                        return Container(
-                          margin: EdgeInsets.only(bottom: 8),
-                          width: lebar,
-                          height: 70,
-                          decoration: BoxDecoration(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 12),
+          child: Column(
+            children: [
+              SizedBox(height: 24),
+              Row(
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        width: 14,
+                        height: 14,
+                        color: Colors.green,
+                      ),
+                      SizedBox(width: 2),
+                      Text('BELUM SOLD')
+                    ],
+                  ),
+                  SizedBox(width: 6),
+                  Row(
+                    children: [
+                      Container(
+                        width: 14,
+                        height: 14,
+                        color: Colors.grey,
+                      ),
+                      SizedBox(width: 2),
+                      Text('SUDAH SOLD')
+                    ],
+                  ),
+                ],
+              ),
+              SizedBox(height: 12),
+              Obx(() => controller.status.value
+                  ? SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: Column(
+                        children: List.generate(controller.data.length, (index) {
+                          Produk dt = controller.data[index];
+        
+                          return Container(
+                            margin: EdgeInsets.only(bottom: 8),
+                            padding: EdgeInsets.only(right: 8),
+                            width: lebar,
+                            height: 85,
+                            decoration: BoxDecoration(
                               color: CustomColors.kremMuda,
-                              borderRadius: BorderRadius.circular(12)),
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 15,
-                                decoration: BoxDecoration(
-                                    color:
-                                        dt.status ? Colors.green : Colors.grey,
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(12),
-                                        bottomLeft: Radius.circular(12))),
-                              ),
-                              Container(
-                                width: 100,
-                                margin: EdgeInsets.only(right: 8),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.only(
-                                        topRight: Radius.circular(12),
-                                        bottomRight: Radius.circular(12))),
-                                        child: Image.network(dt.img, fit: BoxFit.cover,),
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text('ID: ${dt.id} || KAT: ${dt.kategori}',
-                                      style: TextStyle(
-                                          color: Colors.grey, fontSize: 10)),
-                                  SizedBox(height: 4),
-                                  Text('PRODUK: ${capitalize(dt.nama)}'),
-                                  Text(
-                                      'HARGA: ${formatRupiah(dt.harga.toDouble())}'),
-                                ],
-                              )
-                            ],
-                          ),
-                        );
-                      }),
-                    ),
-                  )
-                : Center(
-                    child: CircularProgressIndicator(),
-                  )),
-            Center(
-              child: IconButton(
-                  onPressed: () {
-                    Get.defaultDialog(
-                      title: 'Apakah anda yakin?',
-                      middleText: 'Sign Out dari lelang online?',
-                      confirm: ElevatedButton(
-                          onPressed: () => auth.logout(),
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: CustomColors.ijoTua),
-                          child: Text(
-                            'Ya!',
-                            style: TextStyle(color: Colors.white),
-                          )),
-                      cancel: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: CustomColors.kremTua),
-                          onPressed: () => Get.back(),
-                          child: Text('Tidak!',
-                              style: TextStyle(color: Colors.white))),
-                    );
-                  },
-                  icon: Icon(Icons.logout)),
-            ),
-          ],
+                              borderRadius: BorderRadius.circular(12),
+                              border:
+                                  Border.all(color: Colors.black.withOpacity(.1)),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.1),
+                                  spreadRadius: 2,
+                                  blurRadius: 4,
+                                  offset:
+                                      Offset(0, 2), // changes position of shadow
+                                ),
+                              ],
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Container(
+                                      width: 15,
+                                      decoration: BoxDecoration(
+                                          color: dt.status
+                                              ? Colors.green
+                                              : Colors.grey,
+                                          borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(12),
+                                              bottomLeft: Radius.circular(12))),
+                                    ),
+                                    Container(
+                                      width: 100,
+                                      margin: EdgeInsets.only(right: 8),
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.only(
+                                              topRight: Radius.circular(12),
+                                              bottomRight: Radius.circular(12))),
+                                      child: Image.network(dt.img,
+                                          fit: BoxFit.cover,
+                                          loadingBuilder: (BuildContext context,
+                                              Widget child,
+                                              ImageChunkEvent? loadingProgress) {
+                                        if (loadingProgress == null) {
+                                          return child;
+                                        } else {
+                                          return Center(
+                                            child: CircularProgressIndicator(
+                                              value: loadingProgress
+                                                          .expectedTotalBytes !=
+                                                      null
+                                                  ? loadingProgress
+                                                          .cumulativeBytesLoaded /
+                                                      loadingProgress
+                                                          .expectedTotalBytes!
+                                                  : null,
+                                            ),
+                                          );
+                                        }
+                                      }),
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                            'ID: ${dt.id} || KAT: ${dt.kategori}',
+                                            style: TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: 10)),
+                                        SizedBox(height: 4),
+                                        Text('PRODUK: ${capitalize(dt.nama)}'),
+                                        Text(
+                                            'HARGA: ${formatRupiah(dt.harga.toDouble())}'),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    IconButton(
+                                      onPressed: () {
+                                        Get.toNamed(Routes.EDIT_PRODUK,
+                                            arguments: dt);
+                                      },
+                                      icon: Icon(
+                                        Icons.edit,
+                                        color: Colors.blue,
+                                      ),
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        Get.defaultDialog(
+                                          title: 'Apakah anda yakin?',
+                                          middleText: 'Akan Menghapus Data ini?',
+                                          confirm: ElevatedButton(
+                                              onPressed: () {
+                                                controller.delete(dt.id);
+                                                Get.back();
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                  backgroundColor:
+                                                      CustomColors.ijoTua),
+                                              child: Text(
+                                                'Ya!',
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              )),
+                                          cancel: ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                  backgroundColor:
+                                                      CustomColors.kremTua),
+                                              onPressed: () => Get.back(),
+                                              child: Text('Tidak!',
+                                                  style: TextStyle(
+                                                      color: Colors.white))),
+                                        );
+                                      },
+                                      icon: Icon(
+                                        Icons.delete,
+                                        color: Colors.red,
+                                      ),
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
+                          );
+                        }),
+                      ),
+                    )
+                  : Center(
+                      child: CircularProgressIndicator(),
+                    )),
+              Center(
+                child: IconButton(
+                    onPressed: () {
+                      Get.defaultDialog(
+                        title: 'Apakah anda yakin?',
+                        middleText: 'Sign Out dari lelang online?',
+                        confirm: ElevatedButton(
+                            onPressed: () => auth.logout(),
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: CustomColors.ijoTua),
+                            child: Text(
+                              'Ya!',
+                              style: TextStyle(color: Colors.white),
+                            )),
+                        cancel: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: CustomColors.kremTua),
+                            onPressed: () => Get.back(),
+                            child: Text('Tidak!',
+                                style: TextStyle(color: Colors.white))),
+                      );
+                    },
+                    icon: Icon(Icons.logout)),
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(

@@ -1,22 +1,22 @@
-// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable
+// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:uas_flutter/app/modules/admin/model/produk.model.dart';
 import 'package:uas_flutter/color/color.dart';
-import '../controllers/add_prooduk_controller.dart';
 
-String removeDots(String input) {
-  return input.replaceAll('.', '');
-}
+import '../controllers/edit_produk_controller.dart';
 
-class AddProodukView extends GetView<AddProodukController> {
+class EditProdukView extends GetView<EditProdukController> {
+  Produk data = Get.arguments;
   final List<bool> categories = [true, false];
 
   @override
   Widget build(BuildContext context) {
+    controller.updateVar(data);
     return Scaffold(
         appBar: AppBar(
-          title: Text('Tambah Produk', style: TextStyle(color: Colors.white)),
+          title: Text('Edit Produk', style: TextStyle(color: Colors.white)),
           backgroundColor: CustomColors.ijoMuda,
           iconTheme: IconThemeData(color: Colors.white),
         ),
@@ -46,8 +46,7 @@ class AddProodukView extends GetView<AddProodukController> {
                                   errorBuilder: (BuildContext context,
                                       Object error, StackTrace? stackTrace) {
                                     return Center(
-                                      child: CircularProgressIndicator()
-                                    );
+                                        child: CircularProgressIndicator());
                                   },
                                 )),
                     )),
@@ -102,16 +101,14 @@ class AddProodukView extends GetView<AddProodukController> {
                 Obx(
                   () => ElevatedButton(
                     onPressed: () {
-                      if (!controller.loading.value) {
-                        controller.saveProduk();
-                      }
+                      controller.saveProduk(data.id);
                     },
                     style: ElevatedButton.styleFrom(
                         minimumSize: Size(double.infinity, 50),
                         backgroundColor: CustomColors.ijoTua,
                         elevation: 0),
                     child: Text(
-                      controller.loading.value ? 'Loading...' : 'Simpan',
+                      controller.loading.value ? 'Loading...' : 'Perbarui',
                       style:
                           TextStyle(fontSize: 18, color: CustomColors.kremMuda),
                     ),

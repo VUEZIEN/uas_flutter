@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, prefer_const_constructors
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
@@ -12,14 +12,12 @@ class AdminController extends GetxController {
   getProduct() async {
     try {
       status.value = false;
-      final produk = await fs.collection("produk").get();
+      final produk = await fs.collection("produk").orderBy('harga').get();
 
       print(produk);
 
       if (produk.docs.isNotEmpty) {
         produk.docs.map((e) {
-          print(e.id);
-          print(e.data());
           Produk productList = Produk.fromJson(Map.from(e.data()), e.id);
           data.add(productList);
         }).toList();
@@ -30,7 +28,22 @@ class AdminController extends GetxController {
     }
   }
 
-  final count = 0.obs;
+  delete(String id) async{
+    try {
+      status.value = false;
+      await fs.collection('produk').doc(id).delete();
+      data = [];
+      await getProduct();
+      status.value = true;
+      Get.showSnackbar(GetSnackBar(
+        title: 'Berhasil',
+        message: 'Berhasil Menghapus',
+        duration: Duration(seconds: 2),
+      ));
+    } catch (e) {
+      Get.defaultDialog(middleText: 'gagal');
+    }
+  }
 
   @override
   void onInit() {
