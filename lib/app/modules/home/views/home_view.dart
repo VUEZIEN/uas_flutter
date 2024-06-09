@@ -14,8 +14,8 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('HomeView'),
-        centerTitle: true,
+        title: Text('Home', style: TextStyle(color: Colors.white)),
+        backgroundColor: CustomColors.ijoMuda,
       ),
       body:  Column(
         children: [

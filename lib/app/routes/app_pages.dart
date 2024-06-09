@@ -4,6 +4,10 @@ import '../modules/add-prooduk/bindings/add_prooduk_binding.dart';
 import '../modules/add-prooduk/views/add_prooduk_view.dart';
 import '../modules/admin/bindings/admin_binding.dart';
 import '../modules/admin/views/admin_view.dart';
+import '../modules/detail-lelang/bindings/detail_lelang_binding.dart';
+import '../modules/detail-lelang/views/detail_lelang_view.dart';
+import '../modules/edit-produk/bindings/edit_produk_binding.dart';
+import '../modules/edit-produk/views/edit_produk_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
@@ -14,6 +18,8 @@ import '../modules/otp/bindings/otp_binding.dart';
 import '../modules/otp/views/otp_view.dart';
 import '../modules/phone/bindings/phone_binding.dart';
 import '../modules/phone/views/phone_view.dart';
+import '../modules/qr-view/bindings/qr_view_binding.dart';
+import '../modules/qr-view/views/qr_view_view.dart';
 import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_view.dart';
 
@@ -64,6 +70,21 @@ class AppPages {
       name: _Paths.ADD_PROODUK,
       page: () => AddProodukView(),
       binding: AddProodukBinding(),
+    ),
+    GetPage(
+      name: _Paths.EDIT_PRODUK,
+      page: () => EditProdukView(),
+      binding: EditProdukBinding(),
+    ),
+    GetPage(
+      name: _Paths.QR_VIEW,
+      page: () => QrViewView(),
+      binding: QrViewBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETAIL_LELANG,
+      page: () => DetailLelangView(),
+      binding: DetailLelangBinding(),
     ),
   ];
 }

@@ -1,15 +1,18 @@
 // ignore_for_file: empty_catches, prefer_const_constructors
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:file_picker/file_picker.dart';
+
 import 'dart:typed_data';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
+import 'package:get/get.dart';
 import 'package:uas_flutter/app/modules/add-prooduk/views/add_prooduk_view.dart';
+import 'package:uas_flutter/app/modules/admin/model/produk.model.dart';
 import 'package:uas_flutter/app/routes/app_pages.dart';
 
-class AddProodukController extends GetxController {
+class EditProdukController extends GetxController {
   FirebaseFirestore fs = FirebaseFirestore.instance;
   TextEditingController nama = TextEditingController();
   TextEditingController kategori = TextEditingController();
@@ -20,9 +23,9 @@ class AddProodukController extends GetxController {
     thousandSeparator: '.',
     precision: 0,
   );
+  RxBool loading = false.obs;
   RxString url = ''.obs;
   RxString name = ''.obs;
-  RxBool loading = false.obs;
   RxBool selectedCategory = false.obs;
 
   uploadPhoto() async {
@@ -42,7 +45,6 @@ class AddProodukController extends GetxController {
         await st.ref("product/$fileName").putData(fileBytes);
         final dataUrl = await st.ref("product/$fileName").getDownloadURL();
         url.value = dataUrl;
-        img.text = dataUrl;
         print(url.value);
       } catch (e) {}
     } else {
@@ -55,9 +57,17 @@ class AddProodukController extends GetxController {
     }
   }
 
-  saveProduk() async {
-    CollectionReference produk = fs.collection('produk');
+  updateVar(Produk data) {
+    nama.text = data.nama;
+    harga.text = data.harga.toString();
+    kategori.text = data.kategori;
+    img.text = data.img;
+    url.value = data.img;
+    selectedCategory.value = data.status;
+  }
 
+  saveProduk(String id) async {
+    CollectionReference produk = fs.collection('produk');
     if (nama.text.isNotEmpty &&
         harga.text.isNotEmpty &&
         kategori.text.isNotEmpty &&
@@ -72,13 +82,14 @@ class AddProodukController extends GetxController {
 
       try {
         loading.value = true;
-        await produk.add(produkData).then((value) {
+        await produk.doc(id).update(produkData).then((value) {
           Get.defaultDialog(middleText: 'Ya');
         });
         Get.offAllNamed(Routes.ADMIN);
         loading.value = false;
       } catch (e) {
         loading.value = false;
+        print(e);
         Get.defaultDialog(middleText: 'Gagal');
       }
     } else {
@@ -92,6 +103,7 @@ class AddProodukController extends GetxController {
       print(harga.text);
       print(kategori.text);
       print(img.text);
+      print(status.text);
     }
   }
 }

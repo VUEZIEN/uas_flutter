@@ -30,7 +30,7 @@ class Myapp extends StatelessWidget {
             title: "Application",
             debugShowCheckedModeBanner: false,
             initialRoute: snapshot.data != null
-                ? (snapshot.data.email == 'ariiqmaazin@gmail.com' ? Routes.ADMIN : Routes.HOME)
+                ? (adminEmails.contains(snapshot.data.email) ? Routes.ADMIN : Routes.HOME)
                 : Routes.LOGIN,
             getPages: AppPages.routes,
           );

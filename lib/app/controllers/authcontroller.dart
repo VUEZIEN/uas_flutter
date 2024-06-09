@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_print, unused_local_variable, unnecessary_overrides, unused_element, prefer_const_constructors, unused_catch_clause
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:uas_flutter/app/routes/app_pages.dart';
@@ -30,6 +29,7 @@ class AuthController extends GetxController {
       } else {
         Get.offAllNamed(Routes.HOME);
       }
+
       loading.value = false;
     } on FirebaseAuthException catch (e) {
       Get.defaultDialog(middleText: "Gagal Login", title: "Error");

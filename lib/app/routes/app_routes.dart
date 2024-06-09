@@ -12,6 +12,9 @@ abstract class Routes {
   static const LOGIN_USER = _Paths.LOGIN_USER;
   static const ADMIN = _Paths.ADMIN;
   static const ADD_PROODUK = _Paths.ADD_PROODUK;
+  static const EDIT_PRODUK = _Paths.EDIT_PRODUK;
+  static const QR_VIEW = _Paths.QR_VIEW;
+  static const DETAIL_LELANG = _Paths.DETAIL_LELANG;
 }
 
 abstract class _Paths {
@@ -25,4 +28,7 @@ abstract class _Paths {
   static const LOGIN_USER = '/login-user';
   static const ADMIN = '/admin';
   static const ADD_PROODUK = '/add-prooduk';
+  static const EDIT_PRODUK = '/edit-produk';
+  static const QR_VIEW = '/qr-view';
+  static const DETAIL_LELANG = '/detail-lelang';
 }
