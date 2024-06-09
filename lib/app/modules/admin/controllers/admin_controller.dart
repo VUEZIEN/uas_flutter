@@ -28,6 +28,26 @@ class AdminController extends GetxController {
     }
   }
 
+  filterData(bool jenis) async {
+    status.value = false;
+    var pd;
+
+      pd = await fs
+          .collection('produk')
+          .where('status', isEqualTo: jenis)
+          .get();
+
+    if (pd.docs.isNotEmpty) {
+      data = [];
+      pd.docs.map((e) {
+        Produk produkList = Produk.fromJson(Map.from(e.data()), e.id);
+
+        data.add(produkList);
+      }).toList();
+      status.value = true;
+    }
+  }
+
   delete(String id) async{
     try {
       status.value = false;
