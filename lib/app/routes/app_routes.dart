@@ -16,6 +16,7 @@ abstract class Routes {
   static const QR_VIEW = _Paths.QR_VIEW;
   static const DETAIL_LELANG = _Paths.DETAIL_LELANG;
   static const SCAN = _Paths.SCAN;
+  static const RUANG_LELANG = _Paths.RUANG_LELANG;
 }
 
 abstract class _Paths {
@@ -33,4 +34,5 @@ abstract class _Paths {
   static const QR_VIEW = '/qr-view';
   static const DETAIL_LELANG = '/detail-lelang';
   static const SCAN = '/scan';
+  static const RUANG_LELANG = '/ruang-lelang';
 }

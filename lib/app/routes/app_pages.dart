@@ -22,6 +22,8 @@ import '../modules/qr-view/bindings/qr_view_binding.dart';
 import '../modules/qr-view/views/qr_view_view.dart';
 import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_view.dart';
+import '../modules/ruang_lelang/bindings/ruang_lelang_binding.dart';
+import '../modules/ruang_lelang/views/ruang_lelang_view.dart';
 import '../modules/scan/bindings/scan_binding.dart';
 import '../modules/scan/views/scan_view.dart';
 
@@ -92,6 +94,11 @@ class AppPages {
       name: _Paths.SCAN,
       page: () => ScanView(),
       binding: ScanBinding(),
+    ),
+    GetPage(
+      name: _Paths.RUANG_LELANG,
+      page: () =>  RuangLelangView(),
+      binding: RuangLelangBinding(),
     ),
   ];
 }

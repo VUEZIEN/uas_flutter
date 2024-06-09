@@ -1,39 +1,48 @@
-// ignore_for_file: use_key_in_widget_constructors
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
-import '../controllers/scan_controller.dart';
+// ignore_for_file: library_private_types_in_public_api, prefer_const_constructors
 
-class ScanView extends GetView<ScanController> {
+import 'package:flutter/material.dart';
+import 'package:flutter_web_qrcode_scanner/flutter_web_qrcode_scanner.dart';
+import 'package:get/get.dart';
+import 'package:uas_flutter/app/routes/app_pages.dart';
+
+class ScanView extends StatefulWidget {
+  @override
+  _ScanViewState createState() => _ScanViewState();
+}
+
+class _ScanViewState extends State<ScanView> {
+  CameraController _controller = CameraController(autoPlay: false);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Scan QR Code'),
-        centerTitle: true,
+        title: Text('QR Code Scanner'),
       ),
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            flex: 5,
-            child: QRView(
-              key: controller.qrKey,
-              onQRViewCreated: controller.onQRViewCreated,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            FlutterWebQrcodeScanner(
+              cameraDirection: CameraDirection.back,
+              stopOnFirstResult: false,
+              controller: _controller,
+              onGetResult: (result) {
+                _controller.stopVideoStream();
+                     print(result);
+                     Get.offAllNamed(Routes.RUANG_LELANG, arguments: result);
+              },
+              width: 500,
+              height: 500,
             ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Center(
-              child: Obx(() => Text(
-                controller.scannedCode.value.isEmpty
-                  ? 'Scan a QR code'
-                  : 'Scanned code: ${controller.scannedCode.value}',
-                style: TextStyle(fontSize: 20),
-                textAlign: TextAlign.center,
-              )),
+            ElevatedButton(
+              onPressed: () {
+                // Ensure to start or resume the camera stream
+                _controller.startVideoStream();
+              },
+              child: Text('Start Scanning'),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
