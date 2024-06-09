@@ -15,6 +15,7 @@ abstract class Routes {
   static const EDIT_PRODUK = _Paths.EDIT_PRODUK;
   static const QR_VIEW = _Paths.QR_VIEW;
   static const DETAIL_LELANG = _Paths.DETAIL_LELANG;
+  static const SCAN = _Paths.SCAN;
 }
 
 abstract class _Paths {
@@ -31,4 +32,5 @@ abstract class _Paths {
   static const EDIT_PRODUK = '/edit-produk';
   static const QR_VIEW = '/qr-view';
   static const DETAIL_LELANG = '/detail-lelang';
+  static const SCAN = '/scan';
 }

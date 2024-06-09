@@ -43,6 +43,8 @@ dependencies:
   intl: ^0.17.0
   flutter_masked_text2: ^0.9.1
   qr_flutter: ^4.1.0
+  flutter_barcode_scanner: ^2.0.0
+  qr_code_scanner: ^1.0.0
 
 dev_dependencies:
 
