@@ -28,25 +28,28 @@ class AdminController extends GetxController {
     }
   }
 
-  filterData(bool jenis) async {
-    status.value = false;
-    var pd;
+filterData(bool? jenis) async {
+  status.value = false;
+  var pd;
 
-      pd = await fs
-          .collection('produk')
-          .where('status', isEqualTo: jenis)
-          .get();
+  Query query = fs.collection('produk');
 
-    if (pd.docs.isNotEmpty) {
-      data = [];
-      pd.docs.map((e) {
-        Produk produkList = Produk.fromJson(Map.from(e.data()), e.id);
-
-        data.add(produkList);
-      }).toList();
-      status.value = true;
-    }
+  if (jenis != null) {
+    query = query.where('status', isEqualTo: jenis);
   }
+
+  pd = await query.get();
+
+  if (pd.docs.isNotEmpty) {
+    data = [];
+    pd.docs.forEach((e) {
+      Produk produkList = Produk.fromJson(Map.from(e.data()), e.id);
+      data.add(produkList);
+    });
+    status.value = true;
+  }
+}
+
 
   delete(String id) async{
     try {

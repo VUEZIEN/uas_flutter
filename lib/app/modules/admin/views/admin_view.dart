@@ -27,8 +27,9 @@ class AdminView extends GetView<AdminController> {
   final auth = Get.put(AuthController());
   final srt = Get.put(AuthController());
 
-  List<String> option = ['SOLD', 'BELUM SOLD'];
-  String selectOption = 'BELUM SOLD';
+  List<String> option = ['SOLD', 'BELUM SOLD', 'SEMUA'];
+  String selectOption = 'SEMUA';
+  bool showAllData = false;
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +62,10 @@ class AdminView extends GetView<AdminController> {
                 onChanged: (newValue) {
                   if (newValue == 'BELUM SOLD') {
                     controller.filterData(true);
-                  }  else {
+                  } else if (newValue == 'SEMUA') {
+                    showAllData = false;
+                    controller.filterData(null);
+                  } else {
                     controller.filterData(false);
                   }
                 },
@@ -74,7 +78,10 @@ class AdminView extends GetView<AdminController> {
                       Container(
                         width: 14,
                         height: 14,
-                        color: Colors.green,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          color: Colors.green,
+                        ),
                       ),
                       SizedBox(width: 2),
                       Text('BELUM SOLD')
@@ -86,7 +93,10 @@ class AdminView extends GetView<AdminController> {
                       Container(
                         width: 14,
                         height: 14,
-                        color: Colors.grey,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          color: Colors.grey,
+                        ),
                       ),
                       SizedBox(width: 2),
                       Text('SUDAH SOLD')
@@ -105,7 +115,7 @@ class AdminView extends GetView<AdminController> {
 
                           return GestureDetector(
                             onTap: () {
-                              if(dt.status) {
+                              if (dt.status) {
                                 Get.toNamed(Routes.QR_VIEW, arguments: dt);
                               }
                             },
@@ -115,44 +125,19 @@ class AdminView extends GetView<AdminController> {
                               width: lebar,
                               height: 85,
                               decoration: BoxDecoration(
-                                color: CustomColors.kremMuda,
                                 borderRadius: BorderRadius.circular(12),
                                 border: Border.all(
-                                    color: Colors.black.withOpacity(.1)),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.1),
-                                    spreadRadius: 2,
-                                    blurRadius: 4,
-                                    offset: Offset(
-                                        0, 2), // changes position of shadow
-                                  ),
-                                ],
+                                  color: dt.status ? Colors.green : Colors.grey,
+                                ),
                               ),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     children: [
                                       Container(
-                                        width: 15,
-                                        decoration: BoxDecoration(
-                                            color: dt.status
-                                                ? Colors.green
-                                                : Colors.grey,
-                                            borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(12),
-                                                bottomLeft: Radius.circular(12))),
-                                      ),
-                                      Container(
                                         width: 100,
-                                        margin: EdgeInsets.only(right: 8),
-                                        decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.only(
-                                                topRight: Radius.circular(12),
-                                                bottomRight:
-                                                    Radius.circular(12))),
                                         child: Image.network(dt.img,
                                             fit: BoxFit.cover, loadingBuilder:
                                                 (BuildContext context,
@@ -189,7 +174,8 @@ class AdminView extends GetView<AdminController> {
                                                   color: Colors.grey,
                                                   fontSize: 10)),
                                           SizedBox(height: 4),
-                                          Text('PRODUK: ${capitalize(dt.nama)}'),
+                                          Text(
+                                              'PRODUK: ${capitalize(dt.nama)}'),
                                           Text(
                                               'HARGA: ${formatRupiah(dt.harga.toDouble())}'),
                                         ],
