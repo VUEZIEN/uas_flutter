@@ -14,12 +14,7 @@ class DetailLelangView extends GetView<DetailLelangController> {
         backgroundColor: CustomColors.ijoMuda,
         iconTheme: IconThemeData(color: Colors.white),
       ),
-      body: const Center(
-        child: Text(
-          'DetailLelangView is working',
-          style: TextStyle(fontSize: 20),
-        ),
-      ),
+      body: Text('tes')
     );
   }
 }

@@ -24,18 +24,11 @@ class HomeController extends GetxController {
         final produkDoc = await fs.collection('produk').doc(lelangData['id_produk']).get();
         final produkData = produkDoc.data();
 
-        print('-------');
-        print({
+        psrtList.add({
           ...psrtData,
           "produk": {...produkData!},
           "lelang": {...lelangData}
         });
-        psrtList.add({
-          ...psrtData,
-          "produk": {...produkData},
-          "lelang": {...lelangData}
-        });
-        print('-------');
       }
     }
 

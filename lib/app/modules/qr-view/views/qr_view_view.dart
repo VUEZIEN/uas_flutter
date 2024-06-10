@@ -71,9 +71,10 @@ class QrViewView extends GetView<QrViewController> {
                                           color: CustomColors.kremMuda),
                                     ),
                                   ),
+                                  SizedBox(height: 12),
                                   ElevatedButton(
                                     onPressed: () {
-                                      Get.toNamed(Routes.DETAIL_LELANG);
+                                      Get.toNamed(Routes.DETAIL_PESERTA, arguments: controller.lelangList[0].id);
                                     },
                                     style: ElevatedButton.styleFrom(
                                         minimumSize: Size(double.infinity, 50),
