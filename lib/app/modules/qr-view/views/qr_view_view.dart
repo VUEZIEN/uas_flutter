@@ -54,27 +54,48 @@ class QrViewView extends GetView<QrViewController> {
                       SizedBox(height: 16),
                       Obx(
                         () => controller.ada.value
-                            ? ElevatedButton(
-                                onPressed: () {
-                                  Get.toNamed(Routes.DETAIL_LELANG);
-                                },
-                                style: ElevatedButton.styleFrom(
-                                    minimumSize: Size(double.infinity, 50),
-                                    backgroundColor: CustomColors.ijoTua,
-                                    elevation: 0),
-                                child: Text(
-                                  'Detail lelang',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      color: CustomColors.kremMuda),
-                                ),
+                            ? Column(
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      Get.toNamed(Routes.DETAIL_LELANG);
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                        minimumSize: Size(double.infinity, 50),
+                                        backgroundColor: CustomColors.ijoTua,
+                                        elevation: 0),
+                                    child: Text(
+                                      'Detail lelang',
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          color: CustomColors.kremMuda),
+                                    ),
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      Get.toNamed(Routes.DETAIL_LELANG);
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                        minimumSize: Size(double.infinity, 50),
+                                        backgroundColor: CustomColors.ijoTua,
+                                        elevation: 0),
+                                    child: Text(
+                                      'Data Peserta',
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          color: CustomColors.kremMuda),
+                                    ),
+                                  )
+                                ],
                               )
                             : ElevatedButton(
                                 onPressed: () async {
                                   DateTime? pickedDate = await showDatePicker(
-                                   context: context,
-                                    initialDate: DateTime.now().add(Duration(days: 1)),
-                                    firstDate: DateTime.now().add(Duration(days: 1)),
+                                    context: context,
+                                    initialDate:
+                                        DateTime.now().add(Duration(days: 1)),
+                                    firstDate:
+                                        DateTime.now().add(Duration(days: 1)),
                                     lastDate: DateTime(2101),
                                   );
                                   if (pickedDate != null) {

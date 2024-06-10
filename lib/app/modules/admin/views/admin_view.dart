@@ -1,12 +1,10 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, use_key_in_widget_constructors, must_be_immutable
 
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 import 'package:uas_flutter/app/controllers/authcontroller.dart';
 import 'package:uas_flutter/app/modules/admin/model/produk.model.dart';
-import 'package:uas_flutter/app/modules/qr-view/controllers/qr_view_controller.dart';
 import 'package:uas_flutter/app/routes/app_pages.dart';
 import 'package:uas_flutter/color/color.dart';
 import 'package:intl/intl.dart';
