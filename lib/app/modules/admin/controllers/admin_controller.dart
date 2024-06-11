@@ -17,8 +17,6 @@ class AdminController extends GetxController {
       status.value = false;
       final produk = await fs.collection("produk").orderBy('harga').get();
 
-      print(produk);
-
       if (produk.docs.isNotEmpty) {
         produk.docs.map((e) {
           Produk productList = Produk.fromJson(Map.from(e.data()), e.id);
@@ -31,13 +29,14 @@ class AdminController extends GetxController {
     }
   }
 
-  filterData(bool? jenis) async {
+  filterData(String jenis) async {
+    print(jenis);
     status.value = false;
     var pd;
 
     Query query = fs.collection('produk');
 
-    if (jenis != null) {
+    if (jenis != 'SEMUA') {
       query = query.where('status', isEqualTo: jenis);
     }
 
