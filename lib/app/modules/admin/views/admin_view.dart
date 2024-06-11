@@ -44,8 +44,8 @@ class AdminView extends GetView<AdminController> {
           foregroundColor: Colors.white,
         ),
         drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Container(
                 height: 100,
@@ -70,32 +70,43 @@ class AdminView extends GetView<AdminController> {
                   Get.toNamed(Routes.ADD_PROODUK);
                 },
               ),
+              Spacer(), // Spacer to push the next ListTile to the bottom
               ListTile(
-                title: Text('Email Pengguna: ${controller.user?.email} '),
-              ),
-              ListTile(
-                title: Text('Logout'),
-                onTap: () {
-                  // Action when "Logout" is tapped
-                  Get.defaultDialog(
-                    title: 'Apakah anda yakin?',
-                    middleText: 'Sign Out dari lelang online?',
-                    confirm: ElevatedButton(
-                        onPressed: () => auth.logout(),
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: CustomColors.ijoTua),
-                        child: Text(
-                          'Ya!',
-                          style: TextStyle(color: Colors.white),
-                        )),
-                    cancel: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: CustomColors.kremTua),
-                        onPressed: () => Get.back(),
-                        child: Text('Tidak!',
-                            style: TextStyle(color: Colors.white))),
-                  );
-                },
+                title: Row(
+                  children: [
+                    Text('${controller.user?.email} '),
+                    Spacer(), // Spacer added here
+                    InkWell(
+                      child: Icon(Icons.logout_rounded),
+                      onTap: () {
+                        Get.defaultDialog(
+                          title: 'Apakah anda yakin?',
+                          middleText: 'Sign Out dari lelang online?',
+                          confirm: ElevatedButton(
+                            onPressed: () => auth.logout(),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: CustomColors.ijoTua,
+                            ),
+                            child: Text(
+                              'Ya!',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                          cancel: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: CustomColors.kremTua,
+                            ),
+                            onPressed: () => Get.back(),
+                            child: Text(
+                              'Tidak!',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
