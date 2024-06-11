@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 Produk produkFromJson(String str, String id) =>
     Produk.fromJson(json.decode(str), id);
 

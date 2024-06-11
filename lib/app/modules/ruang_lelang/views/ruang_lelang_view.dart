@@ -2,17 +2,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:uas_flutter/app/modules/admin/model/produk.model.dart';
 import 'package:uas_flutter/app/modules/admin/views/admin_view.dart';
 import 'package:uas_flutter/color/color.dart';
 import '../controllers/ruang_lelang_controller.dart';
 
 class RuangLelangView extends GetView<RuangLelangController> {
   final RuangLelangController co = Get.put(RuangLelangController());
-  final data = Get.arguments as String;
+  final data = Get.arguments as Map;
 
   @override
   Widget build(BuildContext context) {
-    co.setIdLelang(data);
+    co.setIdLelang(data["id_lelang"]);
+    final produk = data['produk'];
 
     return Scaffold(
         appBar: AppBar(
@@ -28,69 +30,112 @@ class RuangLelangView extends GetView<RuangLelangController> {
                   ? controller.isIkut.value
                       ? Column(
                           children: [
-                            Text('Ruang Lelang'),
                             Obx(() => controller.status.value
-                                ? Column(
-                                    children: [
-                                      SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        child: DataTable(
-                                            columns: [
-                                              DataColumn(label: Text('Nama')),
-                                              DataColumn(
-                                                  label: Text('Penawaran')),
-                                            ],
-                                            rows: List.generate(
-                                                controller.detailList.length,
-                                                (i) {
-                                              final dt =
-                                                  controller.detailList[i];
-
-                                              return DataRow(cells: [
-                                                DataCell(Text(
-                                                    '${dt["peserta"]["nama"]} ${dt["peserta"]["id_peserta"] == controller.idUser ? '(Anda)' : ''}')),
-                                                DataCell(Text(
-                                                    '${formatRupiah(dt["bid"])}')),
-                                              ]);
-                                            })),
-                                      ),
-                                      TextField(
-                                        keyboardType: TextInputType.number,
-                                        inputFormatters: [
-                                          FilteringTextInputFormatter.digitsOnly
-                                        ],
-                                        controller: co.harga,
-                                        decoration: InputDecoration(
-                                          border: OutlineInputBorder(),
-                                          labelText: 'BID',
-                                        ),
-                                      ),
-                                      Obx(
-                                        () => ElevatedButton(
-                                          onPressed: () {
-                                            if (!controller.loading.value) {
-                                              controller.bid();
-                                            }
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                              minimumSize:
-                                                  Size(double.infinity, 50),
-                                              backgroundColor:
-                                                  CustomColors.ijoTua,
-                                              elevation: 0),
-                                          child: Text(
-                                            controller.loading.value
-                                                ? 'Loading...'
-                                                : 'Simpan',
-                                            style: TextStyle(
-                                                fontSize: 18,
-                                                color: CustomColors.kremMuda),
+                                ? data['is'] == 'BERLANGSUNG'
+                                    ? Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            margin: EdgeInsets.symmetric(vertical: 8),
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            height: 300,
+                                            child: Image.network(
+                                              produk['img'],
+                                              errorBuilder:
+                                                  (BuildContext context,
+                                                      Object error,
+                                                      StackTrace? stackTrace) {
+                                                return Center(
+                                                    child:
+                                                        CircularProgressIndicator());
+                                              },
+                                            ),
                                           ),
-                                        ),
+                                          Text('NAMA PRODUK: ${produk['nama']}'),
+                                          Text('KATEGORI: ${produk['kategori']}'),
+                                          Text('START HARGA: ${formatRupiah(produk['harga'])}'),
+                                          SizedBox(
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            height: 350,
+                                            child: SingleChildScrollView(
+                                              child: DataTable(
+                                                  columns: [
+                                                    DataColumn(
+                                                        label: Text('Nama')),
+                                                    DataColumn(
+                                                        label:
+                                                            Text('Penawaran')),
+                                                  ],
+                                                  rows: List.generate(
+                                                      controller.detailList
+                                                          .length, (i) {
+                                                    final dt = controller
+                                                        .detailList[i];
+
+                                                    return DataRow(cells: [
+                                                      DataCell(Text(
+                                                          '${dt["peserta"]["nama"]} ${dt["peserta"]["id_peserta"] == controller.idUser ? '(Anda)' : ''}')),
+                                                      DataCell(Text(
+                                                          '${formatRupiah(dt["bid"])}')),
+                                                    ]);
+                                                  })),
+                                            ),
+                                          ),
+                                          TextField(
+                                            keyboardType: TextInputType.number,
+                                            inputFormatters: [
+                                              FilteringTextInputFormatter
+                                                  .digitsOnly
+                                            ],
+                                            controller: co.harga,
+                                            decoration: InputDecoration(
+                                              border: OutlineInputBorder(),
+                                              labelText: 'BID',
+                                            ),
+                                          ),
+                                          SizedBox(height: 4),
+                                          Obx(
+                                            () => ElevatedButton(
+                                              onPressed: () {
+                                                if (!controller.loading.value) {
+                                                  controller.bid(produk['harga']);
+                                                }
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                  minimumSize:
+                                                      Size(double.infinity, 50),
+                                                  backgroundColor:
+                                                      CustomColors.ijoTua,
+                                                  elevation: 0),
+                                              child: Text(
+                                                controller.loading.value
+                                                    ? 'Loading...'
+                                                    : 'BID',
+                                                style: TextStyle(
+                                                    fontSize: 18,
+                                                    color:
+                                                        CustomColors.kremMuda),
+                                              ),
+                                            ),
+                                          )
+                                        ],
                                       )
-                                    ],
-                                  )
+                                    : Container(
+                                        margin: EdgeInsets.only(top: 24),
+                                        width: 500,
+                                        height: 500,
+                                        color: Colors.grey,
+                                        child: Center(
+                                            child: Text('BELUM BERLANGSUNG',
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    fontWeight:
+                                                        FontWeight.w600))),
+                                      )
                                 : CircularProgressIndicator())
                           ],
                         )

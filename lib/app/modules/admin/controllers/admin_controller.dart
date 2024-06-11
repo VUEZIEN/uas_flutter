@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, prefer_const_constructors
+// ignore_for_file: avoid_print, prefer_const_constructors, unnecessary_brace_in_string_interps, prefer_typing_uninitialized_variables
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -30,7 +30,6 @@ class AdminController extends GetxController {
   }
 
   filterData(String jenis) async {
-    print(jenis);
     status.value = false;
     var pd;
 

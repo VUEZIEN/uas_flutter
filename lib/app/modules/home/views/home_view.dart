@@ -44,7 +44,7 @@ class HomeView extends GetView<HomeController> {
                           return GestureDetector(
                             onTap: () {
                               Get.toNamed(Routes.RUANG_LELANG,
-                                  arguments: dt["id_lelang"]);
+                                  arguments: {"id_lelang": dt["id_lelang"], "is": dt['lelang']['keterangan'], "produk": dt['produk']});
                             },
                             child: Container(
                               margin: EdgeInsets.only(top: 12, bottom: 12),
@@ -105,7 +105,15 @@ class HomeView extends GetView<HomeController> {
                                       ),
                                       Text('${dt['produk']["nama"]}'),
                                       Text(
-                                          'Start ${formatRupiah(dt['produk']["harga"].toDouble())}')
+                                          'Start ${formatRupiah(dt['produk']["harga"].toDouble())}'),
+                                      Container(
+                                        margin: EdgeInsets.symmetric(horizontal: 4),
+                                        width: double.infinity,
+                                        height: 20,
+                                        color: dt['lelang']['keterangan'] != 'BERLANGSUNG' ? Colors.grey : Colors.blue,
+                                        child: Center(child: Text(dt['lelang']['keterangan'], style: TextStyle(color: Colors.white))),
+
+                                      )
                                     ],
                                   )
                                 ],

@@ -11,7 +11,6 @@ import 'package:uas_flutter/app/routes/app_pages.dart';
 
 class RuangLelangController extends GetxController {
   String? idUser = FirebaseAuth.instance.currentUser?.uid;
-  Stream authStatus = FirebaseAuth.instance.authStateChanges();
   TextEditingController nama = TextEditingController();
   TextEditingController nik = TextEditingController();
   TextEditingController alamat = TextEditingController();
@@ -41,14 +40,14 @@ class RuangLelangController extends GetxController {
       "nama": nama.text,
       "nik": nik.text,
       "alamat": alamat.text,
-      "id_lelang": idLelang,
+      "id_lelang": idLelang.value,
       "id_peserta": idUser,
     };
 
     final psrt = await fs
         .collection('peserta')
         .where('id_peserta', isEqualTo: idUser)
-        .where('id_lelang', isEqualTo: idLelang)
+        .where('id_lelang', isEqualTo: idLelang.value)
         .get();
 
     if (psrt.docs.isEmpty) {
@@ -100,23 +99,25 @@ class RuangLelangController extends GetxController {
               .where('id_lelang', isEqualTo: idLelang.value)
               .get();
 
-          for (var doc in detailLelang.docs) {
-            final detailData = doc.data();
-            final pesertaDoc = await fs
-                .collection('peserta')
-                .doc(detailData['id_peserta'])
-                .get();
-            final pesertaData = pesertaDoc.data();
+          if (detailLelang.docs.isNotEmpty) {
+            for (var doc in detailLelang.docs) {
+              final detailData = doc.data();
+              final pesertaDoc = await fs
+                  .collection('peserta')
+                  .doc(detailData['id_peserta'])
+                  .get();
+              final pesertaData = pesertaDoc.data();
 
-            detailList.add({
-              ...doc.data(),
-              "peserta": {...pesertaData!}
-            });
+              detailList.add({
+                ...doc.data(),
+                "peserta": {...pesertaData!}
+              });
+            }
+
+            print(detailList[0]);
+
+            detailList.sort((a, b) => b['bid'].compareTo(a['bid']));
           }
-
-          print(detailList[0]);
-
-          detailList.sort((a, b) => b['bid'].compareTo(a['bid']));
         } catch (e) {
           print(e);
         }
@@ -126,7 +127,7 @@ class RuangLelangController extends GetxController {
     }
   }
 
-  bid() async {
+  bid(int hargaAwal) async {
     loading.value = true;
     String? idUser = FirebaseAuth.instance.currentUser?.uid;
     final pesertaDoc = await fs
@@ -139,12 +140,41 @@ class RuangLelangController extends GetxController {
     CollectionReference detail_lelang = fs.collection('detail_lelang');
 
     try {
-      bool isBoleh = int.parse(removeDots(harga.text)) >
-          detailList
-              .map((e) => e['bid'])
-              .reduce((value, element) => value > element ? value : element);
+      if (detailList.isNotEmpty) {
+        print('ga');
+        bool isBoleh = int.parse(removeDots(harga.text)) >
+            detailList
+                .map((e) => e['bid'])
+                .reduce((value, element) => value > element ? value : element);
 
-      if (isBoleh) {
+        if (isBoleh) {
+          await detail_lelang.add({
+            "bid": int.parse(removeDots(harga.text)),
+            "id_peserta": pesertaDataID,
+            "id_lelang": idLelang.value
+          });
+          loading.value = false;
+          harga.text = '';
+          detailLelang();
+        } else {
+          Get.showSnackbar(GetSnackBar(
+            title: 'Failed',
+            message: 'BID Harus lebih tinggi',
+            duration: Duration(seconds: 2),
+          ));
+          loading.value = false;
+          detailLelang();
+        }
+      } else if (int.parse(removeDots(harga.text)) == hargaAwal) {
+        print('ya');
+
+        Get.showSnackbar(GetSnackBar(
+          title: 'Failed',
+          message: 'BID Harus lebih tinggi',
+          duration: Duration(seconds: 2),
+        ));
+        loading.value = false;
+      } else if (int.parse(removeDots(harga.text)) > hargaAwal) {
         await detail_lelang.add({
           "bid": int.parse(removeDots(harga.text)),
           "id_peserta": pesertaDataID,
@@ -153,13 +183,6 @@ class RuangLelangController extends GetxController {
         loading.value = false;
         harga.text = '';
         detailLelang();
-      } else {
-        Get.showSnackbar(GetSnackBar(
-          title: 'Failed',
-          message: 'BID Harus lebih tinggi',
-          duration: Duration(seconds: 2),
-        ));
-        loading.value = false;
       }
     } catch (e) {
       loading.value = false;
