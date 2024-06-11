@@ -58,10 +58,4 @@ class QrViewController extends GetxController {
       print('roor $e');
     }
   }
-
-  @override
-  void onInit() {
-    super.onInit();
-    print('jalan');
-  }
 }

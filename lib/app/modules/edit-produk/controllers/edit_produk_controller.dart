@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
@@ -14,10 +15,12 @@ import 'package:uas_flutter/app/routes/app_pages.dart';
 
 class EditProdukController extends GetxController {
   FirebaseFirestore fs = FirebaseFirestore.instance;
+
   TextEditingController nama = TextEditingController();
   TextEditingController kategori = TextEditingController();
   TextEditingController status = TextEditingController();
   TextEditingController img = TextEditingController();
+
   final MoneyMaskedTextController harga = MoneyMaskedTextController(
     decimalSeparator: '',
     thousandSeparator: '.',
@@ -106,4 +109,6 @@ class EditProdukController extends GetxController {
       print(status.text);
     }
   }
+
+  
 }

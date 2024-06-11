@@ -29,7 +29,7 @@ class _ScanViewState extends State<ScanView> {
               onGetResult: (result) {
                 _controller.stopVideoStream();
                      print(result);
-                     Get.offAllNamed(Routes.RUANG_LELANG, arguments: result);
+                     Get.toNamed(Routes.RUANG_LELANG, arguments: result);
               },
               width: 500,
               height: 500,
@@ -40,6 +40,12 @@ class _ScanViewState extends State<ScanView> {
                 _controller.startVideoStream();
               },
               child: Text('Start Scanning'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Get.toNamed(Routes.RUANG_LELANG);
+              },
+              child: Text('Next'),
             ),
           ],
         ),

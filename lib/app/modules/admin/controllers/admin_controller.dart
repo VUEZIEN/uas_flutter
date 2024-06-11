@@ -1,14 +1,17 @@
 // ignore_for_file: avoid_print, prefer_const_constructors
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:uas_flutter/app/modules/admin/model/produk.model.dart';
 
 class AdminController extends GetxController {
   FirebaseFirestore fs = FirebaseFirestore.instance;
+  FirebaseAuth auth = FirebaseAuth.instance;
+  late User? user = auth.currentUser;
   RxBool status = false.obs;
   List<Produk> data = [];
-  
+
   getProduct() async {
     try {
       status.value = false;
@@ -28,30 +31,29 @@ class AdminController extends GetxController {
     }
   }
 
-filterData(bool? jenis) async {
-  status.value = false;
-  var pd;
+  filterData(bool? jenis) async {
+    status.value = false;
+    var pd;
 
-  Query query = fs.collection('produk');
+    Query query = fs.collection('produk');
 
-  if (jenis != null) {
-    query = query.where('status', isEqualTo: jenis);
+    if (jenis != null) {
+      query = query.where('status', isEqualTo: jenis);
+    }
+
+    pd = await query.get();
+
+    if (pd.docs.isNotEmpty) {
+      data = [];
+      pd.docs.forEach((e) {
+        Produk produkList = Produk.fromJson(Map.from(e.data()), e.id);
+        data.add(produkList);
+      });
+      status.value = true;
+    }
   }
 
-  pd = await query.get();
-
-  if (pd.docs.isNotEmpty) {
-    data = [];
-    pd.docs.forEach((e) {
-      Produk produkList = Produk.fromJson(Map.from(e.data()), e.id);
-      data.add(produkList);
-    });
-    status.value = true;
-  }
-}
-
-
-  delete(String id) async{
+  delete(String id) async {
     try {
       status.value = false;
       await fs.collection('produk').doc(id).delete();
@@ -66,6 +68,10 @@ filterData(bool? jenis) async {
     } catch (e) {
       Get.defaultDialog(middleText: 'gagal');
     }
+  }
+
+  AdminController()  {
+    user = auth.currentUser;
   }
 
   @override

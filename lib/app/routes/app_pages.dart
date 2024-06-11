@@ -6,6 +6,8 @@ import '../modules/admin/bindings/admin_binding.dart';
 import '../modules/admin/views/admin_view.dart';
 import '../modules/detail-lelang/bindings/detail_lelang_binding.dart';
 import '../modules/detail-lelang/views/detail_lelang_view.dart';
+import '../modules/detail-peserta/bindings/detail_peserta_binding.dart';
+import '../modules/detail-peserta/views/detail_peserta_view.dart';
 import '../modules/edit-produk/bindings/edit_produk_binding.dart';
 import '../modules/edit-produk/views/edit_produk_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -97,8 +99,13 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.RUANG_LELANG,
-      page: () =>  RuangLelangView(),
+      page: () => RuangLelangView(),
       binding: RuangLelangBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETAIL_PESERTA,
+      page: () => DetailPesertaView(),
+      binding: DetailPesertaBinding(),
     ),
   ];
 }

@@ -17,6 +17,7 @@ abstract class Routes {
   static const DETAIL_LELANG = _Paths.DETAIL_LELANG;
   static const SCAN = _Paths.SCAN;
   static const RUANG_LELANG = _Paths.RUANG_LELANG;
+  static const DETAIL_PESERTA = _Paths.DETAIL_PESERTA;
 }
 
 abstract class _Paths {
@@ -35,4 +36,5 @@ abstract class _Paths {
   static const DETAIL_LELANG = '/detail-lelang';
   static const SCAN = '/scan';
   static const RUANG_LELANG = '/ruang-lelang';
+  static const DETAIL_PESERTA = '/detail-peserta';
 }
