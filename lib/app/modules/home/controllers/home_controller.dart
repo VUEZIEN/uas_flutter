@@ -24,11 +24,28 @@ class HomeController extends GetxController {
         final produkDoc = await fs.collection('produk').doc(lelangData['id_produk']).get();
         final produkData = produkDoc.data();
 
-        psrtList.add({
-          ...psrtData,
-          "produk": {...produkData!},
-          "lelang": {...lelangData}
-        });
+        if(lelangData['id_pemenang'] != null) {
+          // print(lelangData['id_pemenang']);
+          final pesertaMenang = await fs.collection('peserta').doc(lelangData['id_pemenang']).get();
+
+
+          print(pesertaMenang.data());
+
+          psrtList.add({
+            ...psrtData,
+            "produk": {...produkData!},
+            "lelang": {...lelangData},
+            "pemenang": pesertaMenang.data()?['id_peserta']
+          });
+        } else {
+          psrtList.add({
+            ...psrtData,
+            "produk": {...produkData!},
+            "lelang": {...lelangData},
+            "pemenang": null
+          });
+        }
+
       }
     }
 

@@ -41,12 +41,6 @@ class _ScanViewState extends State<ScanView> {
               },
               child: Text('Start Scanning'),
             ),
-            ElevatedButton(
-              onPressed: () {
-                Get.toNamed(Routes.RUANG_LELANG);
-              },
-              child: Text('Next'),
-            ),
           ],
         ),
       ),

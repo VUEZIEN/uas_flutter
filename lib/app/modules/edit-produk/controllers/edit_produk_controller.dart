@@ -100,14 +100,6 @@ class EditProdukController extends GetxController {
         message: 'Harap isi semua bidang!',
         duration: Duration(seconds: 2),
       ));
-
-      print(nama.text);
-      print(harga.text);
-      print(kategori.text);
-      print(img.text);
-      print(status.text);
     }
   }
-
-  
 }

@@ -16,6 +16,7 @@ class QrViewView extends GetView<QrViewController> {
   @override
   Widget build(BuildContext context) {
     controller.getDataLelang(data.id);
+    controller.cek(data.id);
 
     return Scaffold(
       appBar: AppBar(
@@ -36,24 +37,40 @@ class QrViewView extends GetView<QrViewController> {
                         () => controller.ada.value
                             ? Obx(() => Column(
                                   children: [
-                                    Container(
-                                      width: double.infinity,
-                                      height: 40,
-                                      color:
-                                          controller.lelangList[0].keterangan !=
-                                                  'BERLANGSUNG'
-                                              ? Colors.red
-                                              : Colors.blue,
-                                      child: Center(
-                                        child: Text(
-                                          controller.lelangList[0].keterangan,
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.white),
-                                        ),
-                                      ),
-                                    ),
+                                    controller.namaPemenang.value.isEmpty
+                                        ? Container(
+                                            width: double.infinity,
+                                            height: 40,
+                                            color: controller.lelangList[0]
+                                                        .keterangan !=
+                                                    'BERLANGSUNG'
+                                                ? Colors.red
+                                                : Colors.blue,
+                                            child: Center(
+                                              child: Text(
+                                                controller
+                                                    .lelangList[0].keterangan,
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: Colors.white),
+                                              ),
+                                            ),
+                                          )
+                                        : Container(
+                                            width: double.infinity,
+                                            height: 40,
+                                            color: Colors.blue,
+                                            child: Center(
+                                              child: Text(
+                                                'PEMENANG: ${controller.namaPemenang.value}',
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: Colors.white),
+                                              ),
+                                            ),
+                                          ),
                                     SizedBox(height: 4),
                                     controller.lelangList[0].keterangan !=
                                             'BERLANGSUNG'
@@ -75,24 +92,64 @@ class QrViewView extends GetView<QrViewController> {
                                               ),
                                             ),
                                           )
-                                        : GestureDetector(
-                                            onTap: () {
-                                              controller.bukaLelang();
-                                            },
-                                            child: Container(
-                                              width: double.infinity,
-                                              height: 30,
-                                              color: Colors.grey,
-                                              child: Center(
-                                                child: Text(
-                                                  'KLIK UNTUK TUTUP LELANG',
-                                                  style: TextStyle(
-                                                      fontSize: 16,
-                                                      color: Colors.black),
+                                        : controller.namaPemenang.value.isEmpty
+                                            ? GestureDetector(
+                                                onTap: () {
+                                                  Get.defaultDialog(
+                                                    title: 'Apakah anda yakin?',
+                                                    middleText:
+                                                        'Menutup Lelang Ini??',
+                                                    confirm: ElevatedButton(
+                                                      onPressed: () {
+                                                        controller
+                                                            .tutupLelang();
+                                                        Get.back();
+                                                      },
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                        backgroundColor:
+                                                            CustomColors.ijoTua,
+                                                      ),
+                                                      child: Text(
+                                                        'Ya!',
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.white),
+                                                      ),
+                                                    ),
+                                                    cancel: ElevatedButton(
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                        backgroundColor:
+                                                            CustomColors
+                                                                .kremTua,
+                                                      ),
+                                                      onPressed: () =>
+                                                          Get.back(),
+                                                      child: Text(
+                                                        'Tidak!',
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.white),
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                                child: Container(
+                                                  width: double.infinity,
+                                                  height: 30,
+                                                  color: Colors.grey,
+                                                  child: Center(
+                                                    child: Text(
+                                                      'KLIK UNTUK TUTUP LELANG',
+                                                      style: TextStyle(
+                                                          fontSize: 16,
+                                                          color: Colors.black),
+                                                    ),
+                                                  ),
                                                 ),
-                                              ),
-                                            ),
-                                          ),
+                                              )
+                                            : SizedBox(),
                                     QrImageView(
                                       data: controller.lelangList[0].id,
                                       version: QrVersions.auto,
@@ -121,7 +178,9 @@ class QrViewView extends GetView<QrViewController> {
                                 children: [
                                   ElevatedButton(
                                     onPressed: () {
-                                      Get.toNamed(Routes.DETAIL_LELANG);
+                                      Get.toNamed(Routes.DETAIL_LELANG,
+                                          arguments:
+                                              controller.lelangList[0].id);
                                     },
                                     style: ElevatedButton.styleFrom(
                                         minimumSize: Size(double.infinity, 50),
@@ -156,19 +215,7 @@ class QrViewView extends GetView<QrViewController> {
                               )
                             : ElevatedButton(
                                 onPressed: () async {
-                                  DateTime? pickedDate = await showDatePicker(
-                                    context: context,
-                                    initialDate:
-                                        DateTime.now().add(Duration(days: 1)),
-                                    firstDate:
-                                        DateTime.now().add(Duration(days: 1)),
-                                    lastDate: DateTime(2101),
-                                  );
-                                  if (pickedDate != null) {
-                                    // Save to lelang with the selected date
-                                    controller.saveToLelang(data, pickedDate);
-                                    print(pickedDate);
-                                  }
+                                  controller.saveToLelang(data);
                                 },
                                 style: ElevatedButton.styleFrom(
                                     minimumSize: Size(double.infinity, 50),

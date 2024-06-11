@@ -1,23 +1,52 @@
+// ignore_for_file: avoid_print
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
 class DetailLelangController extends GetxController {
-  //TODO: Implement DetailLelangController
+  FirebaseFirestore fs = FirebaseFirestore.instance;
+  RxString idLelang = ''.obs;
+  RxBool status = false.obs;
+  List<dynamic> detailList = [];
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  void setIdLelang(String id) {
+    idLelang.value = id;
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
+  detailLelang() async {
+    status.value = false;
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
+    try {
+      detailList = [];
+      final detailLelang = await fs
+          .collection('detail_lelang')
+          .where('id_lelang', isEqualTo: idLelang.value)
+          .get();
 
-  void increment() => count.value++;
+      if (detailLelang.docs.isNotEmpty) {
+        for (var doc in detailLelang.docs) {
+          final detailData = doc.data();
+          final pesertaDoc = await fs
+              .collection('peserta')
+              .doc(detailData['id_peserta'])
+              .get();
+          final pesertaData = pesertaDoc.data();
+
+          detailList.add({
+            ...detailData,
+            "peserta": {...pesertaData!}
+          });
+
+          detailList.sort((a, b) => b['bid'].compareTo(a['bid']));
+        }
+
+        status.value = true;
+      } else {
+        detailList = [];
+        status.value = true;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 }

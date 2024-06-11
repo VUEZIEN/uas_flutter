@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:uas_flutter/app/modules/admin/model/produk.model.dart';
 import 'package:uas_flutter/app/modules/admin/views/admin_view.dart';
 import 'package:uas_flutter/color/color.dart';
 import '../controllers/ruang_lelang_controller.dart';
@@ -62,6 +61,7 @@ class RuangLelangView extends GetView<RuangLelangController> {
                                                 .width,
                                             height: 350,
                                             child: SingleChildScrollView(
+                                              scrollDirection: Axis.vertical,
                                               child: DataTable(
                                                   columns: [
                                                     DataColumn(
@@ -121,7 +121,8 @@ class RuangLelangView extends GetView<RuangLelangController> {
                                                         CustomColors.kremMuda),
                                               ),
                                             ),
-                                          )
+                                          ),
+                                          SizedBox(height: 16),
                                         ],
                                       )
                                     : Container(
