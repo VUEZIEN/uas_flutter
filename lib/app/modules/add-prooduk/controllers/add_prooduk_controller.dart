@@ -23,7 +23,6 @@ class AddProodukController extends GetxController {
   RxString url = ''.obs;
   RxString name = ''.obs;
   RxBool loading = false.obs;
-  RxBool selectedCategory = false.obs;
 
   uploadPhoto() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
@@ -43,7 +42,6 @@ class AddProodukController extends GetxController {
         final dataUrl = await st.ref("product/$fileName").getDownloadURL();
         url.value = dataUrl;
         img.text = dataUrl;
-        print(url.value);
       } catch (e) {}
     } else {
       // User canceled the picker
@@ -67,7 +65,7 @@ class AddProodukController extends GetxController {
         "harga": int.parse(removeDots(harga.text)),
         "kategori": kategori.text.toLowerCase(),
         "img": url.value,
-        "status": selectedCategory.value
+        "status": 'BELUM SOLD'
       };
 
       try {
@@ -87,11 +85,6 @@ class AddProodukController extends GetxController {
         message: 'Harap isi semua bidang!',
         duration: Duration(seconds: 2),
       ));
-
-      print(nama.text);
-      print(harga.text);
-      print(kategori.text);
-      print(img.text);
     }
   }
 }
