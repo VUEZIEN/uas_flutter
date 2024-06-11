@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:uas_flutter/app/modules/admin/model/produk.model.dart';
@@ -38,12 +39,60 @@ class QrViewView extends GetView<QrViewController> {
                                     Container(
                                       width: double.infinity,
                                       height: 40,
-                                      color: Colors.red,
+                                      color:
+                                          controller.lelangList[0].keterangan !=
+                                                  'BERLANGSUNG'
+                                              ? Colors.red
+                                              : Colors.blue,
                                       child: Center(
                                         child: Text(
-                                            controller.lelangList[0].keterangan, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),),
+                                          controller.lelangList[0].keterangan,
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.white),
+                                        ),
                                       ),
                                     ),
+                                    SizedBox(height: 4),
+                                    controller.lelangList[0].keterangan !=
+                                            'BERLANGSUNG'
+                                        ? GestureDetector(
+                                            onTap: () {
+                                              controller.bukaLelang();
+                                            },
+                                            child: Container(
+                                              width: double.infinity,
+                                              height: 30,
+                                              color: Colors.grey,
+                                              child: Center(
+                                                child: Text(
+                                                  'KLIK UNTUK MULAI LELANG',
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      color: Colors.black),
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                        : GestureDetector(
+                                            onTap: () {
+                                              controller.bukaLelang();
+                                            },
+                                            child: Container(
+                                              width: double.infinity,
+                                              height: 30,
+                                              color: Colors.grey,
+                                              child: Center(
+                                                child: Text(
+                                                  'KLIK UNTUK TUTUP LELANG',
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      color: Colors.black),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
                                     QrImageView(
                                       data: controller.lelangList[0].id,
                                       version: QrVersions.auto,

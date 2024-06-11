@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls, unnecessary_cast
+// ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls, unnecessary_cast, prefer_const_constructors
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
@@ -17,10 +17,9 @@ class QrViewController extends GetxController {
     CollectionReference lelang = fs.collection('lelang');
 
     final lelangData = {
-      "start": DateTime.now(),
-      "end": tgl,
       "id_produk": dt.id,
-      "id_pemenang": null, 
+      "id_pemenang": null,
+      "keterangan": 'BELUM BERLANGSUNG'
     };
 
     try {
@@ -42,7 +41,8 @@ class QrViewController extends GetxController {
         lelangList.clear();
 
         data.docs.forEach((e) {
-          Lelang lelang = Lelang.fromJson(e.data() as Map<String, dynamic>, e.id);
+          Lelang lelang =
+              Lelang.fromJson(e.data() as Map<String, dynamic>, e.id);
           lelangList.add(lelang);
         });
 
@@ -56,6 +56,32 @@ class QrViewController extends GetxController {
       loading.value = false;
       ada.value = false;
       print('roor $e');
+    }
+  }
+
+  bukaLelang() async {
+    CollectionReference lelang = fs.collection('lelang');
+
+    try {
+      loading.value = true;
+
+      await lelang
+          .doc(lelangList[0].id)
+          .update({"keterangan": 'BERLANGSUNG'}).then((value) {
+        Get.showSnackbar(GetSnackBar(
+          title: 'Berhasil',
+          message: 'Lelang Dibuka!',
+          duration: Duration(seconds: 2),
+        ));
+        getDataLelang(lelangList[0].idProduk);
+      });
+    } catch (e) {
+      print(e);
+      Get.showSnackbar(GetSnackBar(
+        title: 'Failed!',
+        message: 'Lelang gagal dibuka',
+        duration: Duration(seconds: 2),
+      ));
     }
   }
 }

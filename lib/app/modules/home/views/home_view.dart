@@ -32,8 +32,6 @@ class HomeView extends GetView<HomeController> {
                         print('======');
                         print(dt);
                         print('======');
-                        final start = DateTime.fromMillisecondsSinceEpoch(dt['lelang']['start'].seconds * 1000);
-                        final end = DateTime.fromMillisecondsSinceEpoch(dt['lelang']['end'].seconds * 1000);
 
                         return GestureDetector(
                           onTap: () {
@@ -46,8 +44,6 @@ class HomeView extends GetView<HomeController> {
                             color: Colors.grey,
                             child: Column(
                               children: [
-                                Text('START ${DateFormat('yyyy-MM-dd').format(start)}'),
-                                Text('END ${DateFormat('yyyy-MM-dd').format(end)}'),
                                 Text('NAMA ${dt['produk']["nama"]}')
                                 
                               ],
