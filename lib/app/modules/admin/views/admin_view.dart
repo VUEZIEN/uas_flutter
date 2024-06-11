@@ -35,7 +35,7 @@ class AdminView extends GetView<AdminController> {
   @override
   Widget build(BuildContext context) {
     final lebar = MediaQuery.of(context).size.width;
-    controller.filterData(true);
+    controller.filterData('SEMUA');
 
     return Scaffold(
         appBar: AppBar(
@@ -120,12 +120,12 @@ class AdminView extends GetView<AdminController> {
                   }).toList(),
                   onChanged: (newValue) {
                     if (newValue == 'BELUM SOLD') {
-                      controller.filterData(true);
+                      controller.filterData('BELUM SOLD');
                     } else if (newValue == 'SEMUA') {
                       showAllData = false;
-                      controller.filterData(null);
+                      controller.filterData('SEMUA');
                     } else {
-                      controller.filterData(false);
+                      controller.filterData('SOLD');
                     }
                   },
                 ),
@@ -174,7 +174,7 @@ class AdminView extends GetView<AdminController> {
 
                             return GestureDetector(
                               onTap: () {
-                                if (dt.status) {
+                                if (dt.status != 'SOLD') {
                                   Get.toNamed(Routes.QR_VIEW, arguments: dt);
                                 }
                               },
@@ -188,7 +188,7 @@ class AdminView extends GetView<AdminController> {
                                   border: Border.all(
                                     width: 1.5,
                                     color:
-                                        dt.status ? Colors.green : Colors.grey,
+                                        dt.status == 'BELUM SOLD' ? Colors.green : Colors.grey,
                                   ),
                                 ),
                                 child: Row(

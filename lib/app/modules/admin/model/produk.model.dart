@@ -11,7 +11,7 @@ class Produk {
   String img;
   String kategori;
   String nama;
-  bool status;
+  String status;
 
   Produk({
     required this.harga,

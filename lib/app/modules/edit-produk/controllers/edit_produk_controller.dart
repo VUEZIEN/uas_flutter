@@ -9,6 +9,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
 import 'package:uas_flutter/app/modules/add-prooduk/views/add_prooduk_view.dart';
 import 'package:uas_flutter/app/modules/admin/model/produk.model.dart';
 import 'package:uas_flutter/app/routes/app_pages.dart';
@@ -29,7 +30,6 @@ class EditProdukController extends GetxController {
   RxBool loading = false.obs;
   RxString url = ''.obs;
   RxString name = ''.obs;
-  RxBool selectedCategory = false.obs;
 
   uploadPhoto() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
@@ -66,7 +66,6 @@ class EditProdukController extends GetxController {
     kategori.text = data.kategori;
     img.text = data.img;
     url.value = data.img;
-    selectedCategory.value = data.status;
   }
 
   saveProduk(String id) async {
@@ -80,7 +79,7 @@ class EditProdukController extends GetxController {
         "harga": int.parse(removeDots(harga.text)),
         "kategori": kategori.text.toLowerCase(),
         "img": url.value,
-        "status": selectedCategory.value
+        "status": 'BELUM SOLD'
       };
 
       try {
