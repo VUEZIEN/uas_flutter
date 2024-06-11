@@ -30,13 +30,27 @@ class QrViewView extends GetView<QrViewController> {
                     child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      SizedBox(height: 16),
                       Obx(
                         () => controller.ada.value
-                            ? Obx(() => QrImageView(
-                                  data: controller.lelangList[0].id,
-                                  version: QrVersions.auto,
-                                  size: 200,
-                                  gapless: false,
+                            ? Obx(() => Column(
+                                  children: [
+                                    Container(
+                                      width: double.infinity,
+                                      height: 40,
+                                      color: Colors.red,
+                                      child: Center(
+                                        child: Text(
+                                            controller.lelangList[0].keterangan, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),),
+                                      ),
+                                    ),
+                                    QrImageView(
+                                      data: controller.lelangList[0].id,
+                                      version: QrVersions.auto,
+                                      size: 200,
+                                      gapless: false,
+                                    )
+                                  ],
                                 ))
                             : Container(
                                 width: 200,
@@ -74,7 +88,9 @@ class QrViewView extends GetView<QrViewController> {
                                   SizedBox(height: 12),
                                   ElevatedButton(
                                     onPressed: () {
-                                      Get.toNamed(Routes.DETAIL_PESERTA, arguments: controller.lelangList[0].id);
+                                      Get.toNamed(Routes.DETAIL_PESERTA,
+                                          arguments:
+                                              controller.lelangList[0].id);
                                     },
                                     style: ElevatedButton.styleFrom(
                                         minimumSize: Size(double.infinity, 50),

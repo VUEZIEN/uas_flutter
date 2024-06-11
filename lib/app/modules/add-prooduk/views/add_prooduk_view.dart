@@ -10,8 +10,6 @@ String removeDots(String input) {
 }
 
 class AddProodukView extends GetView<AddProodukController> {
-  final List<bool> categories = [true, false];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,27 +74,6 @@ class AddProodukView extends GetView<AddProodukController> {
                     border: OutlineInputBorder(),
                     labelText: 'Harga',
                   ),
-                ),
-                SizedBox(height: 16),
-                DropdownButtonFormField<String>(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Status',
-                  ),
-                  value: controller.selectedCategory.toString(),
-                  items: categories.map((category) {
-                    return DropdownMenuItem<String>(
-                      value: category.toString(),
-                      child: Text(category.toString()),
-                    );
-                  }).toList(),
-                  onChanged: (newValue) {
-                    if (newValue == 'false') {
-                      controller.selectedCategory.value = false;
-                    } else {
-                      controller.selectedCategory.value = true;
-                    }
-                  },
                 ),
                 SizedBox(height: 16),
                 Obx(
