@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, use_key_in_widget_constructors, must_be_immutable
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -45,7 +46,7 @@ class AdminView extends GetView<AdminController> {
         ),
         drawer: Drawer(
           child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Container(
                 height: 100,
@@ -189,148 +190,170 @@ class AdminView extends GetView<AdminController> {
                                   Get.toNamed(Routes.QR_VIEW, arguments: dt);
                                 }
                               },
-                              child: Container(
-                                margin: EdgeInsets.only(bottom: 8),
-                                padding: EdgeInsets.only(right: 8),
-                                width: lebar,
-                                height: 85,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  border: Border.all(
-                                    width: 1.5,
-                                    color:
-                                        dt.status == 'BELUM SOLD' ? Colors.green : Colors.grey,
-                                  ),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
+                              child: Stack(
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(bottom: 8),
+                                    padding: EdgeInsets.only(right: 8),
+                                    width: lebar,
+                                    height: 85,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      border: Border.all(
+                                        width: 1.5,
+                                        color: dt.status == 'BELUM SOLD'
+                                            ? Colors.green
+                                            : Colors.grey,
+                                      ),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Container(
-                                          width: 100,
-                                          height: 85,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(
-                                                  10.0), // Ubah angka sesuai keinginan Anda
-                                              bottomLeft: Radius.circular(
-                                                  10.0), // Ubah angka sesuai keinginan Anda
-                                            ),
-                                          ),
-                                          child: ClipRRect(
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(
-                                                  10.0), // Atur sesuai keinginan Anda
-                                              bottomLeft: Radius.circular(
-                                                  10.0), // Atur sesuai keinginan Anda
-                                            ),
-                                            child: Image.network(dt.img,
-                                                fit: BoxFit.cover,
-                                                loadingBuilder:
-                                                    (BuildContext context,
+                                        Row(
+                                          children: [
+                                            Container(
+                                              width: 100,
+                                              height: 85,
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(
+                                                      10.0), // Ubah angka sesuai keinginan Anda
+                                                  bottomLeft: Radius.circular(
+                                                      10.0), // Ubah angka sesuai keinginan Anda
+                                                ),
+                                              ),
+                                              child: ClipRRect(
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(
+                                                      10.0), // Atur sesuai keinginan Anda
+                                                  bottomLeft: Radius.circular(
+                                                      10.0), // Atur sesuai keinginan Anda
+                                                ),
+                                                child: Image.network(dt.img,
+                                                    fit: BoxFit.cover,
+                                                    loadingBuilder: (BuildContext
+                                                            context,
                                                         Widget child,
                                                         ImageChunkEvent?
                                                             loadingProgress) {
-                                              if (loadingProgress == null) {
-                                                return child;
-                                              } else {
-                                                return Center(
-                                                  child:
-                                                      CircularProgressIndicator(
-                                                    value: loadingProgress
-                                                                .expectedTotalBytes !=
-                                                            null
-                                                        ? loadingProgress
-                                                                .cumulativeBytesLoaded /
-                                                            loadingProgress
-                                                                .expectedTotalBytes!
-                                                        : null,
-                                                  ),
-                                                );
-                                              }
-                                            }),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                                'ID: ${dt.id} || KAT: ${dt.kategori}',
-                                                style: TextStyle(
-                                                    color: Colors.grey,
-                                                    fontSize: 10)),
-                                            SizedBox(height: 4),
-                                            Text(
-                                                'PRODUK: ${capitalize(dt.nama)}'),
-                                            Text(
-                                                'HARGA: ${formatRupiah(dt.harga.toDouble())}'),
+                                                  if (loadingProgress == null) {
+                                                    return child;
+                                                  } else {
+                                                    return Center(
+                                                      child:
+                                                          CircularProgressIndicator(
+                                                        value: loadingProgress
+                                                                    .expectedTotalBytes !=
+                                                                null
+                                                            ? loadingProgress
+                                                                    .cumulativeBytesLoaded /
+                                                                loadingProgress
+                                                                    .expectedTotalBytes!
+                                                            : null,
+                                                      ),
+                                                    );
+                                                  }
+                                                }),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 5,
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                    'ID: ${dt.id} || KAT: ${dt.kategori}',
+                                                    style: TextStyle(
+                                                        color: Colors.grey,
+                                                        fontSize: 10)),
+                                                SizedBox(height: 4),
+                                                Text(
+                                                    'PRODUK: ${capitalize(dt.nama)}'),
+                                                Text(
+                                                    'HARGA: ${formatRupiah(dt.harga.toDouble())}'),
+                                              ],
+                                            ),
                                           ],
                                         ),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        IconButton(
-                                          onPressed: () {
-                                            Get.toNamed(Routes.EDIT_PRODUK,
-                                                arguments: dt);
-                                          },
-                                          icon: Icon(
-                                            Icons.edit,
-                                            color: Colors.blue,
-                                          ),
-                                        ),
-                                        IconButton(
-                                          onPressed: () {
-                                            Get.defaultDialog(
-                                              title: 'Apakah anda yakin?',
-                                              middleText:
-                                                  'Akan Menghapus Data ini?',
-                                              confirm: ElevatedButton(
-                                                  onPressed: () {
-                                                    controller.delete(dt.id);
-                                                    Get.back();
-                                                  },
-                                                  style:
-                                                      ElevatedButton.styleFrom(
-                                                          backgroundColor:
-                                                              CustomColors
-                                                                  .ijoTua),
-                                                  child: Text(
-                                                    'Ya!',
-                                                    style: TextStyle(
-                                                        color: Colors.white),
-                                                  )),
-                                              cancel: ElevatedButton(
-                                                  style:
-                                                      ElevatedButton.styleFrom(
-                                                          backgroundColor:
-                                                              CustomColors
-                                                                  .kremTua),
-                                                  onPressed: () => Get.back(),
-                                                  child: Text('Tidak!',
-                                                      style: TextStyle(
-                                                          color:
-                                                              Colors.white))),
-                                            );
-                                          },
-                                          icon: Icon(
-                                            Icons.delete,
-                                            color: Colors.red,
-                                          ),
+                                        Row(
+                                          children: [
+                                            IconButton(
+                                              onPressed: () {
+                                                Get.toNamed(Routes.EDIT_PRODUK,
+                                                    arguments: dt);
+                                              },
+                                              icon: Icon(
+                                                Icons.edit,
+                                                color: Colors.blue,
+                                              ),
+                                            ),
+                                            IconButton(
+                                              onPressed: () {
+                                                Get.defaultDialog(
+                                                  title: 'Apakah anda yakin?',
+                                                  middleText:
+                                                      'Akan Menghapus Data ini?',
+                                                  confirm: ElevatedButton(
+                                                      onPressed: () {
+                                                        controller
+                                                            .delete(dt.id);
+                                                        Get.back();
+                                                      },
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                              backgroundColor:
+                                                                  CustomColors
+                                                                      .ijoTua),
+                                                      child: Text(
+                                                        'Ya!',
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.white),
+                                                      )),
+                                                  cancel: ElevatedButton(
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                              backgroundColor:
+                                                                  CustomColors
+                                                                      .kremTua),
+                                                      onPressed: () =>
+                                                          Get.back(),
+                                                      child: Text('Tidak!',
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .white))),
+                                                );
+                                              },
+                                              icon: Icon(
+                                                Icons.delete,
+                                                color: Colors.red,
+                                              ),
+                                            )
+                                          ],
                                         )
                                       ],
-                                    )
-                                  ],
-                                ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    top: 5,
+                                    left: 5,
+                                    child: Container(
+                                      width: 10,
+                                      height: 10,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: dt.status == 'BELUM SOLD'
+                                            ? Colors.green
+                                            : Colors.grey,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             );
                           }),
