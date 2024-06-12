@@ -195,34 +195,10 @@ class RuangLelangController extends GetxController {
     }
   }
 
-  void listenToBids() {
-    fs.collection('detail_lelang')
-      .where('id_lelang', isEqualTo: idLelang.value)
-      .snapshots()
-      .listen((snapshot) {
-        detailList.clear();
-        for (var doc in snapshot.docs) {
-          final detailData = doc.data();
-          fs.collection('peserta')
-            .doc(detailData['id_peserta'])
-            .get()
-            .then((pesertaDoc) {
-              final pesertaData = pesertaDoc.data();
-              detailList.add({
-                ...detailData,
-                "peserta": {...pesertaData!}
-              });
-
-              detailList.sort((a, b) => b['bid'].compareTo(a['bid']));
-              status.value = true;
-            });
-        }
-      });
-  }
-
-  @override
-  void onInit() {
-    super.onInit();
-    listenToBids();
+    Stream<QuerySnapshot> detailLelangStream() {
+    return fs
+        .collection('detail_lelang')
+        .where('id_lelang', isEqualTo: idLelang.value)
+        .snapshots();
   }
 }
