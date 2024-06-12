@@ -88,7 +88,7 @@ class LoginView extends GetView<LoginController> {
                 )),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () => auth.signInWithGoogle(),
               style: ElevatedButton.styleFrom(
                   minimumSize: Size(double.infinity, 50),
                   backgroundColor: CustomColors.kremMuda,

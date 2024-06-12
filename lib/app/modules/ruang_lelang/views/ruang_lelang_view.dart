@@ -12,8 +12,10 @@ class RuangLelangView extends GetView<RuangLelangController> {
 
   @override
   Widget build(BuildContext context) {
+    print(data['id_lelang']);
     co.setIdLelang(data["id_lelang"]);
     final produk = data['produk'];
+    print(produk);
 
     return Scaffold(
         appBar: AppBar(

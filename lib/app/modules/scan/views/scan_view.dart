@@ -29,7 +29,7 @@ class _ScanViewState extends State<ScanView> {
               onGetResult: (result) {
                 _controller.stopVideoStream();
                      print(result);
-                     Get.toNamed(Routes.RUANG_LELANG, arguments: result);
+                     Get.toNamed(Routes.RUANG_LELANG, arguments: {"id_lelang": result});
               },
               width: 500,
               height: 500,
