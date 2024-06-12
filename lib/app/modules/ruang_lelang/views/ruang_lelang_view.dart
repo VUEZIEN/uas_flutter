@@ -1,3 +1,4 @@
+// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_const_literals_to_create_immutables, unnecessary_string_interpolations
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,10 +13,8 @@ class RuangLelangView extends GetView<RuangLelangController> {
 
   @override
   Widget build(BuildContext context) {
-    print(data['id_lelang']);
     co.setIdLelang(data["id_lelang"]);
     final produk = data['produk'];
-    print(produk);
 
     return Scaffold(
       appBar: AppBar(
@@ -40,7 +39,8 @@ class RuangLelangView extends GetView<RuangLelangController> {
                                       Container(
                                         margin:
                                             EdgeInsets.symmetric(vertical: 8),
-                                        width: MediaQuery.of(context).size.width,
+                                        width:
+                                            MediaQuery.of(context).size.width,
                                         height: 300,
                                         child: Image.network(
                                           produk['img'],
@@ -62,8 +62,8 @@ class RuangLelangView extends GetView<RuangLelangController> {
                                             MediaQuery.of(context).size.width,
                                         height: 350,
                                         child: StreamBuilder<QuerySnapshot>(
-                                          stream: controller
-                                              .detailLelangStream(),
+                                          stream:
+                                              controller.detailLelangStream(),
                                           builder: (context, snapshot) {
                                             if (snapshot.connectionState ==
                                                 ConnectionState.waiting) {
@@ -93,7 +93,8 @@ class RuangLelangView extends GetView<RuangLelangController> {
                                                     DataColumn(
                                                         label: Text('Nama')),
                                                     DataColumn(
-                                                        label: Text('Penawaran')),
+                                                        label:
+                                                            Text('Penawaran')),
                                                   ],
                                                   rows: List.generate(
                                                       detailList.length, (i) {
@@ -105,7 +106,8 @@ class RuangLelangView extends GetView<RuangLelangController> {
                                                           future: co.fs
                                                               .collection(
                                                                   'peserta')
-                                                              .doc(dt['id_peserta'])
+                                                              .doc(dt[
+                                                                  'id_peserta'])
                                                               .get(),
                                                           builder: (context,
                                                               snapshot) {
@@ -128,14 +130,14 @@ class RuangLelangView extends GetView<RuangLelangController> {
                                                             }
 
                                                             final pesertaData =
-                                                                snapshot
-                                                                        .data!
+                                                                snapshot.data!
                                                                         .data()
                                                                     as Map<
                                                                         String,
                                                                         dynamic>;
+                                                                         final isUser = snapshot.data?['id_peserta'] == controller.idUser;
                                                             return Text(
-                                                                '${pesertaData["nama"]} ${dt["id_peserta"] == controller.idUser ? '(Anda)' : ''}');
+                                                                '${pesertaData["nama"]} ${isUser ? '(Anda)' : ''}');
                                                           },
                                                         ),
                                                       ),
