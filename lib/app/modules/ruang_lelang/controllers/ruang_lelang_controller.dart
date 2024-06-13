@@ -194,4 +194,11 @@ class RuangLelangController extends GetxController {
       print(e);
     }
   }
+
+    Stream<QuerySnapshot> detailLelangStream() {
+    return fs
+        .collection('detail_lelang')
+        .where('id_lelang', isEqualTo: idLelang.value)
+        .snapshots();
+  }
 }
