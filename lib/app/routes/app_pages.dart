@@ -82,21 +82,21 @@ class AppPages {
       page: () => EditProdukView(),
       binding: EditProdukBinding(),
     ),
-    GetPage(
-      name: _Paths.QR_VIEW,
-      page: () => QrViewView(),
-      binding: QrViewBinding(),
-    ),
+    // GetPage(
+    //   name: _Paths.QR_VIEW,
+    //   page: () => QrViewView(),
+    //   binding: QrViewBinding(),
+    // ),
     GetPage(
       name: _Paths.DETAIL_LELANG,
       page: () => DetailLelangView(),
       binding: DetailLelangBinding(),
     ),
-    GetPage(
-      name: _Paths.SCAN,
-      page: () => ScanView(),
-      binding: ScanBinding(),
-    ),
+    // GetPage(
+    //   name: _Paths.SCAN,
+    //   page: () => ScanView(),
+    //   binding: ScanBinding(),
+    // ),
     GetPage(
       name: _Paths.RUANG_LELANG,
       page: () => RuangLelangView(),

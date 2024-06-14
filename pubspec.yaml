@@ -37,16 +37,13 @@ dependencies:
   firebase_storage: ^11.0.0
   flutter:
     sdk: flutter
-  flutter_barcode_scanner: ^2.0.0
   flutter_countdown_timer: ^4.1.0
+  flutter_launcher_icons: ^0.13.1
   flutter_masked_text2: ^0.9.1
-  flutter_web_qrcode_scanner: ^1.1.1
   get: 4.6.6
   google_sign_in: ^6.2.1
   intl: ^0.17.0
   pinput: ^4.0.0
-  qr_code_scanner: ^1.0.0
-  qr_flutter: ^4.1.0
 
 dev_dependencies:
   flutter_lints: ^3.0.0
