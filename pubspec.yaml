@@ -43,6 +43,7 @@ dependencies:
   get: 4.6.6
   google_sign_in: ^6.2.1
   intl: ^0.17.0
+  mobile_scanner: ^5.1.1
   pinput: ^4.0.0
 
 dev_dependencies:
