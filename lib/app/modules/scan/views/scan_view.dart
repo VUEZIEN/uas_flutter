@@ -1,9 +1,8 @@
 // ignore_for_file: library_private_types_in_public_api, prefer_const_constructors, unused_local_variable
 
 import 'package:flutter/material.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:get/get.dart';
-import 'package:uas_flutter/app/routes/app_pages.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 class ScanView extends StatefulWidget {
   @override
@@ -11,6 +10,18 @@ class ScanView extends StatefulWidget {
 }
 
 class _ScanViewState extends State<ScanView> {
+  Future<void> scanBarcode() async{
+    String barcodeRes;
+    try {
+      barcodeRes = await FlutterBarcodeScanner.scanBarcode('#ff6666', 'Cancel', true, ScanMode.BARCODE);
+      debugPrint(barcodeRes);
+    } on PlatformException {
+      barcodeRes = 'gagal';
+    }
+    if(!mounted) return;
+    
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,13 +32,10 @@ class _ScanViewState extends State<ScanView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            MobileScanner(
-              onDetect: (capture) {
-                final List<Barcode> barcodes = capture.barcodes;
-                for (final barcode in barcodes) {
-                  print(capture);
-                }
-              },
+            Text('SCAN'),
+            ElevatedButton(
+              onPressed: () => scanBarcode(), 
+              child: Text('START SCAN')
             )
           ],
         ),

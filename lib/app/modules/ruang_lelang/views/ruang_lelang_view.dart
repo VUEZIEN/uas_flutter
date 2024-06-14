@@ -56,7 +56,7 @@ class RuangLelangView extends GetView<RuangLelangController> {
                                       Text('NAMA PRODUK: ${produk['nama']}'),
                                       Text('KATEGORI: ${produk['kategori']}'),
                                       Text(
-                                          'START HARGA: ${formatRupiah(produk['harga'])}'),
+                                          'START HARGA: ${formatRupiah(double.parse(produk['harga']))}'),
                                       SizedBox(
                                         width:
                                             MediaQuery.of(context).size.width,
@@ -142,7 +142,7 @@ class RuangLelangView extends GetView<RuangLelangController> {
                                                         ),
                                                       ),
                                                       DataCell(Text(
-                                                          '${formatRupiah(dt["bid"])}')),
+                                                          '${formatRupiah(double.parse(dt["bid"]))}')),
                                                     ]);
                                                   }));
                                             }
