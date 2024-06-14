@@ -56,7 +56,7 @@ class RuangLelangView extends GetView<RuangLelangController> {
                                       Text('NAMA PRODUK: ${produk['nama']}'),
                                       Text('KATEGORI: ${produk['kategori']}'),
                                       Text(
-                                          'START HARGA: ${formatRupiah(double.parse(produk['harga']))}'),
+                                          'START HARGA: ${formatRupiah(double.parse(produk['harga'].toString()))}'),
                                       SizedBox(
                                         width:
                                             MediaQuery.of(context).size.width,
@@ -136,13 +136,15 @@ class RuangLelangView extends GetView<RuangLelangController> {
                                                                         String,
                                                                         dynamic>;
                                                                          final isUser = snapshot.data?['id_peserta'] == controller.idUser;
+
+                                                  print(dt['bid']);
                                                             return Text(
                                                                 '${pesertaData["nama"]} ${isUser ? '(Anda)' : ''}');
                                                           },
                                                         ),
                                                       ),
                                                       DataCell(Text(
-                                                          '${formatRupiah(double.parse(dt["bid"]))}')),
+                                                          '${formatRupiah(double.parse(dt["bid"].toString()))}')),
                                                     ]);
                                                   }));
                                             }

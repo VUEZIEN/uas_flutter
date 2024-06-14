@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:get/get.dart';
+import 'package:uas_flutter/app/routes/app_pages.dart';
 
 class ScanView extends StatefulWidget {
   @override
@@ -15,11 +17,12 @@ class _ScanViewState extends State<ScanView> {
     try {
       barcodeRes = await FlutterBarcodeScanner.scanBarcode('#ff6666', 'Cancel', true, ScanMode.BARCODE);
       debugPrint(barcodeRes);
+      Get.toNamed(Routes.RUANG_LELANG, arguments: {"id_lelang": barcodeRes});
     } on PlatformException {
       barcodeRes = 'gagal';
     }
     if(!mounted) return;
-    
+
   }
 
   @override
